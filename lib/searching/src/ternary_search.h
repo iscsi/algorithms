@@ -3,12 +3,13 @@
 
 //input format:
 //output format: long double
-//constraints: unimodal function ( /\ or \/ )
+//constraints: (strictly) unimodal function ( /\ or \/ )
 //complexity: log(N)
 //memory : O(1)
 //resource1: https://codeforces.com/blog/entry/60702
 //resource2: https://codeforces.com/blog/entry/43440
 //resource3: https://codeforces.com/blog/entry/11497
+//resource4: https://apps.topcoder.com/forums/?module=Thread&threadID=670169&start=0
 
 template<typename T>
 long double ternary_search(std::function<T(long double)> f, long double A, long double B)
@@ -33,10 +34,10 @@ long double ternary_search(std::function<T(long double)> f, long double A, long 
 template<typename T>
 int64_t ternary_searchInt(std::function<T(int64_t)> f, int64_t A, int64_t B)
 {	//return minimum pos
-	while (A + 1 < B)
+	while (A  < B)
 	{
 		int64_t mid = (A + B) / 2;
-		if (f(mid) < f(mid + 1))
+		if (f(mid) > f(mid + 1))
 			B = mid;
 		else
 			A = mid + 1;
