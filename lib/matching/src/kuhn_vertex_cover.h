@@ -1,3 +1,6 @@
+#pragma once
+#include <tools.h>
+
 //Kuhn O(V*E)
 //https://sites.google.com/site/indy256/algo/kuhn_matching2
 //http://codeforces.com/blog/entry/17534
@@ -21,7 +24,7 @@ pair<vector<bool>, vector<bool> > minVertexCover(const vector<vector<int> >& g, 
 {
 	int A = g.size();
 	vector<int> matching(B, -1);
-	REP(u, A)
+	forn(u, A)
 	{
 		vector<bool> vis(A, false);
 		findPath(g, u, matching, vis);
@@ -31,13 +34,13 @@ pair<vector<bool>, vector<bool> > minVertexCover(const vector<vector<int> >& g, 
 	//min vertex cover is all visited in B&matching u not visited A&matching
 	vector<bool> visA(A,1), visB(B,1);
 	vector<pair<int, int> > q;
-	REP(i, B) if (matching[i] != -1)
+	forn(i, B) if (matching[i] != -1)
 			visA[matching[i]]=0, visB[i] = 0;
-	REP(i, A) if (visA[i])
+	forn(i, A) if (visA[i])
 		q.push_back(make_pair(i, 0));
-	REP(i, B) if (visB[i])
+	forn(i, B) if (visB[i])
 		q.push_back(make_pair(i, 1));
-	REP(i, q.size())
+	forn(i, q.size())
 	{
 		int actId = q[i].first;
 		int actSide = q[i].second;
@@ -51,7 +54,7 @@ pair<vector<bool>, vector<bool> > minVertexCover(const vector<vector<int> >& g, 
 		}
 		else
 		{
-			REP(j, g[actId].size())
+			forn(j, g[actId].size())
 			{
 				int other = g[actId][j];
 				if (!visB[other] && matching[other] != i)
@@ -63,7 +66,7 @@ pair<vector<bool>, vector<bool> > minVertexCover(const vector<vector<int> >& g, 
 		}
 	}
 	vector<bool> ASide(A), BSide(B);
-	REP(i, B) if (matching[i] != -1)
+	forn(i, B) if (matching[i] != -1)
 	{
 		if (visB[i])
 			BSide[i] = 1;

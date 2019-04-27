@@ -1,4 +1,13 @@
+#pragma once
 #include <windows.h>
+#include <my_template.h>
+
+//input format:
+//output format:
+//constraints:
+//complexity:
+//resource:
+
 //Logger start
 
 enum LOGCOLOUR
