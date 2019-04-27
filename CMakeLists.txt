@@ -11,4 +11,5 @@ set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT I
 add_subdirectory(lib/number_theory/test/)
 add_subdirectory(lib/matching/test/)
 add_subdirectory(lib/segment_tree/test/)
+add_subdirectory(lib/searching/test/)
 
