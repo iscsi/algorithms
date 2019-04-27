@@ -12,4 +12,5 @@ add_subdirectory(lib/number_theory/test/)
 add_subdirectory(lib/matching/test/)
 add_subdirectory(lib/segment_tree/test/)
 add_subdirectory(lib/searching/test/)
+add_subdirectory(lib/all_test/)
 
