@@ -1,0 +1,5 @@
+file(GLOB_RECURSE FENWICK_TREE_SRC "../src/*.h")
+source_group("src" FILES ${FENWICK_TREE_SRC})
+add_executable(FenwickTreeTest fenwick_tree_test.cc fenwick_tree_test.h ../fenwick_tree_all.h ${FENWICK_TREE_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(FenwickTreeTest Rili)
