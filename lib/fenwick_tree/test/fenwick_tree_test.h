@@ -13,3 +13,37 @@ TEST(FenwickTreeTest, FenwickTreeTest)
 	fw.inc(1,11);
 	EXPECT_EQ(fw.sum(6), 40);
 }
+
+TEST(FenwickTreeTest, FenwickTreeFastInitTest)
+{
+	FenwickTree<uint32_t> fw;
+	fw.fastInit({ 5, 0, 7, 4, 3, 1, 9 });
+	EXPECT_EQ(fw.sum(2), 12);
+	EXPECT_EQ(fw.sum(3), 16);
+	EXPECT_EQ(fw.sum(6), 29);
+	fw.inc(1, 11);
+	EXPECT_EQ(fw.sum(6), 40);
+}
+
+TEST(FenwickTreeTest, FenwickTreePerformanceInitTest)
+{
+	FenwickTree<uint64_t> fw;
+	vector<uint64_t> v = generateVector<uint64_t>(1e6, 0, 1e9);
+	fw.init(v);
+}
+
+TEST(FenwickTreeTest, FenwickTreePerformanceFastInitTest)
+{
+	FenwickTree<uint64_t> fw;
+	vector<uint64_t> v = generateVector<uint64_t>(1e6, 0, 1e9);
+	fw.fastInit(v);
+}
+
+TEST(FenwickTreeTest, FenwickTreeInitComparisionTest)
+{
+	FenwickTree<uint64_t> fw, fw2;
+	vector<uint64_t> v = generateVector<uint64_t>(1e5, 0, 1e9);
+	fw.init(v);
+	fw2.fastInit(v);
+	EXPECT_EQ(fw.data, fw2.data);
+}

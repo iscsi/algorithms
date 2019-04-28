@@ -19,6 +19,16 @@ struct FenwickTree
 		forn(i, v.size())
 			inc(i, v[i]);
 	}
+	void fastInit(const vector<T>& v)
+	{
+		data = v;
+		forn(i, v.size())
+		{
+			size_t np = i | (i + 1);
+			if (np < v.size())
+				data[np] += data[i];
+		}
+	}
 	void inc(size_t pos, T val)
 	{
 		for (; pos < data.size(); pos |= pos + 1)

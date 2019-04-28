@@ -80,3 +80,72 @@ double getRandom(double from, double to)
 }
 
 //random end
+
+//generate random vector Integral
+
+template <typename T>
+vector<T> generateVector(size_t _size, T from, T to)
+{
+	vector<T> res(_size);
+	forn(i, _size)
+		res[i] = getRandom<T>(from, to);
+	return res;
+}
+
+
+
+/*
+void generate(int seed = 0)
+{
+	srand(seed);
+	int n = getRandom(2, 10);
+	printf("%d\n", n);
+	set<int> used;
+	for (int i = 0; i < n; ++i) {
+		int x;
+		do {
+			x = getRandom(1, 10);
+		} while (used.count(x));
+		printf("%d ", x);
+		used.insert(x);
+	}
+	puts("");
+}
+
+void generateTree(int seed = 0)
+{
+	srand(seed);
+	int n = getRandom(2, 20);
+	printf("%d\n", n);
+	for (int i = 2; i <= n; ++i)
+	{
+		printf("%d %d\n", getRandom(1, i - 1), i);
+	}
+}
+
+void generateTree2(int seed = 0)
+{
+	srand(seed);
+	int n = rand(2, 20);
+	printf("%d\n", n);
+	vector<pair<int, int>> edges;
+	for (int i = 2; i <= n; ++i) {
+		edges.emplace_back(rand(1, i - 1), i);
+	}
+
+	vector<int> perm(n + 1); // re-naming vertices
+	for (int i = 1; i <= n; ++i) {
+		perm[i] = i;
+	}
+	random_shuffle(perm.begin() + 1, perm.end());
+
+	random_shuffle(edges.begin(), edges.end()); // random order of edges
+
+	for (pair<int, int> edge : edges) {
+		int a = edge.first, b = edge.second;
+		if (rand() % 2) {
+			swap(a, b); // random order of two vertices
+		}
+		printf("%d %d\n", perm[a], perm[b]);
+	}
+}*/
