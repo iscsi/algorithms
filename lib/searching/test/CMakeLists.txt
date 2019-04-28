@@ -1,4 +1,5 @@
-file(GLOB_RECURSE SEARCHING_SRC "../src/searching_all.h")
+file(GLOB_RECURSE SEARCHING_SRC "../searching_all.h" "../src/*.h")
+source_group("src" FILES ${SEARCHING_SRC})
 add_executable(SearchingTest searching_test.cc searching_test.h ${SEARCHING_SRC})
 add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
 target_link_libraries(SearchingTest Rili)

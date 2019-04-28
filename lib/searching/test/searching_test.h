@@ -17,19 +17,24 @@ TEST(TernarySearchTest, TernarySearchDoubles)
 }
 
 
-TEST(TernarySearchTest, TernarySearchIntegral)
+TEST(TernarySearchTest, TernarySearchIntegralEvenResult)
 {
-	
 	EXPECT_EQ(ternary_searchInt<uint64_t>([](int64_t A) {return static_cast<uint64_t>(std::abs(A - 12345334) + 5); }, -1000000000000000L, 1000000000000000L), 12345334);
+}
 
+TEST(TernarySearchTest, TernarySearchIntegralOddResult)
+{
 	EXPECT_EQ(ternary_searchInt<uint64_t>([](int64_t A) {return static_cast<uint64_t>(std::abs(A - 12345335) + 5); }, -1000000000000000L, 1000000000000000L), 12345335);
+}
+
+TEST(TernarySearchTest, TernarySearchIntegralIntervalBegin)
+{
+	EXPECT_EQ(ternary_searchInt<uint64_t>([](int64_t A) {return static_cast<uint64_t>(std::abs(A + 1000000000000000L) + 5); }, -1000000000000000L, 1000000000000000L), -1000000000000000L);
 }
 
 TEST(TernarySearchTest, TernarySearchIntegralIntervalEnd)
 {
-
 	EXPECT_EQ(ternary_searchInt<uint64_t>([](int64_t A) {return static_cast<uint64_t>(std::abs(A - 1000000000000000L) + 5); }, -1000000000000000L, 1000000000000000L), 1000000000000000L);
-
-	EXPECT_EQ(ternary_searchInt<uint64_t>([](int64_t A) {return static_cast<uint64_t>(std::abs(A + 1000000000000000L) + 5); }, -1000000000000000L, 1000000000000000L), -1000000000000000L);
 }
+
 
