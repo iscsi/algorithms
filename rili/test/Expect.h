@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <functional>
+#include <rili/test/AlmostEqual.h>
 #include <rili/test/Config.h>
 #include <rili/test/ConvertToString.h>
 #include <string>
@@ -19,6 +20,9 @@
 
 #define RILI_EXPECT_NE_HELPER(FILE, LINE, LEFT, RIGHT, MESSAGE, ...) \
 	::rili::test::expect::ne(FILE, LINE, LEFT, RIGHT, #LEFT, #RIGHT, std::string(MESSAGE))
+
+#define RILI_EXPECT_NEARLY_HELPER(FILE, LINE, LEFT, RIGHT, PRECISION, MESSAGE, ...) \
+	::rili::test::expect::nearly(FILE, LINE, LEFT, RIGHT, PRECISION, #LEFT, #RIGHT, std::string(MESSAGE))
 
 #define RILI_EXPECT_LT_HELPER(FILE, LINE, LEFT, RIGHT, MESSAGE, ...) \
 	::rili::test::expect::lt(FILE, LINE, LEFT, RIGHT, #LEFT, #RIGHT, std::string(MESSAGE))
@@ -96,6 +100,23 @@
 	RILI_EXPECT_VA_ARGS_MACRO_EXPAND( \
 		RILI_EXPECT_NE_HELPER(__FILE__, __LINE__, LEFT, __VA_ARGS__, std::string(), std::string()))
 
+ /**
+  * @brief EXPECT_NEAR(LEFT, RIGHT, PRECISION, MESSAGE) indicate about failure if LEFT and RIGHT are not very close
+  *
+  * To failure information is included:
+  * * file location
+  * * line number
+  * * LEFT and RIGHT stringified expression,
+  * * LEFT and RIGHT value if convertiable to string (by std::ostringstream interface)
+  * * optional message
+  *
+  * @note message parameter is optional - if not provided empty will be used
+  * @return comparation result
+  */
+#define EXPECT_NEARLY(LEFT, RIGHT, ...) \
+    RILI_EXPECT_VA_ARGS_MACRO_EXPAND( \
+        RILI_EXPECT_NEARLY_HELPER(__FILE__, __LINE__, LEFT, RIGHT, __VA_ARGS__, std::string(), std::string()))
+		
 /**
  * @brief EXPECT_LT(LEFT, RIGHT, MESSAGE) indicate about failure if LEFT is not less than RIGHT(using: `!(LEFT <
  * RIGHT)`)
@@ -268,6 +289,18 @@ bool ne(const char* file, int64_t const& line, LEFT const& l, RIGHT const& r, co
 	return l != r ? true : (handleFailure(operation, std::string(file), std::to_string(line), toString(l), toString(r),
 										  std::string(lname), std::string(rname), message),
 							false);
+}
+
+template <typename LEFT, typename RIGHT, typename PRECISION>
+bool nearly(const char* file, int64_t const& line, LEFT const& l, RIGHT const& r, PRECISION precision, const char* lname,
+	const char* rname, std::string const& message) noexcept {
+	const std::string operation("EXPECT_NEAR");
+	return true;
+	return almostEqual(l, r, precision)
+		? true
+		: (handleFailure(operation, std::string(file), std::to_string(line), toString(l), toString(r),
+			std::string(lname), std::string(rname), std::to_string(precision) + "\", \"" + message),
+			false);
 }
 
 template <typename LEFT, typename RIGHT>

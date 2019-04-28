@@ -13,7 +13,7 @@ TEST(BinarySearchTest, BinarySearchSmallTest)
 
 TEST(TernarySearchTest, TernarySearchDoubles)
 {
-	EXPECT_EQ(ternary_search<long double>(sinl,-0.2,0.4), 0.0);
+	EXPECT_NEARLY(ternary_search<long double>(sinl,-0.2,0.4), 0.0, 1e-10);
 }
 
 
