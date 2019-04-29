@@ -106,7 +106,7 @@ struct SegmentTreeLazy
 	{
 		if (pos == 0)
 			return;
-		push(pos >> 1);
+		push(pos / 2);
 		if (lazy[pos] != 0)
 		{
 			apply(2 * pos, lazy[pos]);
