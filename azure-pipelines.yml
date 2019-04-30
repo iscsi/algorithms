@@ -1,11 +1,4 @@
-pool:
-    vmImage: 'Hosted VS2017'
-
-variables:
-    solution: '**/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-
-steps:
-    - task: CMake@1
+- task: PythonScript@0
+  inputs:
+    scriptPath: 'build_gen.py'
     
