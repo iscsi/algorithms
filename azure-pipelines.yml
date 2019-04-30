@@ -1,4 +1,22 @@
-- task: PythonScript@0
-  inputs:
-    scriptPath: 'build_gen.py'
-    
+resources:
+- repo: self
+
+phases:
+
+- phase: Windows64bit
+  queue:
+    name: 'Hosted VS2017'
+    BuildType: Release
+
+  steps:
+  - task: CMake@1
+    displayName: 'CMake .. -G"Visual Studio 15 2017 Win64"'
+    inputs:
+      cmakeArgs: '.. -G"Visual Studio 15 2017 Win64"'
+
+  - task: MSBuild@1
+    displayName: 'Build solution build/IscsiLibrary.sln'
+    inputs:
+      solution: build/IscsiLibrary.sln
+      msbuildArguments: '/m /p:Configuration=Release'
+      
