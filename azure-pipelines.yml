@@ -17,4 +17,7 @@ phases:
     displayName: 'Build solution build/IscsiLibrary.sln'
     inputs:
       solution: build/IscsiLibrary.sln
-      msbuildArguments: '/m /p:Configuration=Release'
+      msbuildArguments: '/m /p:Configuration=Release /target:AllTest'
+  - script: 'AllTest.exe'
+    workingDirectory: build/lib/all_test/Release/
+    displayName: 'Run Tests'
