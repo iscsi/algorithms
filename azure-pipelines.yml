@@ -1,3 +1,11 @@
-- task: CMake@1
-  inputs:
-    cmakeArgs: 
+pool:
+    vmImage: 'VS2017'
+
+variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
+
+steps:
+    - task: CMake@1
+    
