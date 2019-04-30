@@ -6,8 +6,7 @@ phases:
 - phase: Windows64bit
   queue:
     name: 'Hosted VS2017'
-    BuildType: Release
-
+    
   steps:
   - task: CMake@1
     displayName: 'CMake .. -G"Visual Studio 15 2017 Win64"'
@@ -19,4 +18,3 @@ phases:
     inputs:
       solution: build/IscsiLibrary.sln
       msbuildArguments: '/m /p:Configuration=Release'
-      
