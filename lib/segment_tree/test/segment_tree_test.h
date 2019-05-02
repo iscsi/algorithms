@@ -31,5 +31,4 @@ TEST(SegmentTreeLazyTest, SegmentTreeLazySmallUpdateTest)
 	EXPECT_EQ(stl.query(3, 4), 4);
 	EXPECT_EQ(stl.query(0, 4), 2);
 	EXPECT_EQ(stl.query(0, 7), 1);
-	EXPECT_EQ(stl.query(0, 7), 2);
 }
