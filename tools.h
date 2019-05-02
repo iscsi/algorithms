@@ -1,6 +1,7 @@
 #pragma once
-#include <windows.h>
 #include <my_template.h>
+/*#include <windows.h>
+
 
 //input format:
 //output format:
@@ -58,7 +59,7 @@ struct LOGGER
     << __FILENAME__ << ":" << __LINE__ <<" --- " << message_;\
 
 string LOGGER::sLogFileName("log.txt");
-
+*/
 //Logger end
 
 //random start

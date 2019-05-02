@@ -28,8 +28,6 @@
 
 // 17.4.1.2 Headers
 
-extern "C" __declspec(dllimport) int __stdcall IsDebuggerPresent();
-
 // C
 #ifndef _GLIBCXX_NO_ASSERT
 #include <cassert>
@@ -122,4 +120,28 @@ extern "C" __declspec(dllimport) int __stdcall IsDebuggerPresent();
 
 #if __cplusplus >= 201402L
 #include <shared_mutex>
+#endif
+
+#ifdef _MSC_VER
+extern "C" __declspec(dllimport) int __stdcall IsDebuggerPresent();
+
+uint32_t __inline ctz(uint32_t val)
+{
+	uint32_t res = 0;
+	if (_BitScanForward((unsigned long*)(&res), val))
+		return res;
+	return 32;
+}
+
+uint32_t __inline clz(uint32_t val)
+{
+	uint32_t res = 0;
+	if (_BitScanReverse((unsigned long*)(&res), val))
+		return res;
+	return 32;
+}
+
+#define __builtin_clz clz
+#define __builtin_ctz ctz
+
 #endif
