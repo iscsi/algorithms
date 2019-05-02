@@ -9,7 +9,7 @@
 
 inline bool isGitlabCi()
 {
-	static bool result = GetEnvironmentVariableA("GITLAB_CI", nullptr, 0) != 0;
+	static bool result = GetEnvironmentVariableA("ISCSI_CI", nullptr, 0) != 0;
 	return result;
 }
 

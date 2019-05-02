@@ -1,6 +1,9 @@
 resources:
 - repo: self
 
+variables:
+    ISCSI_CI: 'ISCSI_CI'
+
 phases:
 
 - phase: Windows64bit
