@@ -1,4 +1,5 @@
 cmake_minimum_required (VERSION 3.6)
+set(CMAKE_CXX_STANDARD 11)
 project (IscsiLibrary)
 file(GLOB_RECURSE RILI_TEST "rili/*.cpp" "rili/*.h")
 source_group("rili_test" FILES ${RILI_TEST})

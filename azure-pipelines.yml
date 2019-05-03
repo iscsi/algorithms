@@ -22,26 +22,23 @@ phases:
     workingDirectory: build/lib/all_test/Release/
     displayName: 'Run Tests'
 
-#- phase: LinuxSelfHost
-#  queue:
-#    name: 'Hosted Ubuntu 1604'
-#  steps:
-#  - script: 'ls'
-#    displayName: 'list'
-#  - script: 'mkdir build'
-#    displayName: 'mkdir build'
-#  - script: 'cp CMakeLists.txt build/'
-#    displayName: 'cp cmakelist'
-#  - script: 'cmake generators --help'
-#    displayName: 'cmake generators'
-#  - script: 'cmake -DCMAKE_CXX_FLAGS="-stdlib=libstdc++ -std=c++17"'
-#    displayName: 'cmake'
-#  - task: CMake@1
-#    inputs:
-#      cmakeArgs: '-DCMAKE_CXX_FLAGS="-stdlib=libstdc++ -std=c++11"'
-#  - script: 'make AllTest'
-#    displayName: 'Build AllTest'
-#  - script: './AllTest.out'
-#    workingDirectory: lib/all_test/
-#    displayName: 'run AllTest'
+- phase: LinuxSelfHost
+  queue:
+    name: 'Hosted Ubuntu 1604'
+  steps:
+  - script: 'ls'
+    displayName: 'list'
+  - script: 'mkdir build'
+    displayName: 'mkdir build'
+  - script: 'cp CMakeLists.txt build/'
+    displayName: 'cp cmakelist'
+  - script: 'cmake generators --help'
+    displayName: 'cmake generators'
+  - script: 'cmake '
+    displayName: 'cmake'
+  - script: 'make AllTest'
+    displayName: 'Build AllTest'
+  - script: './AllTest.out'
+    workingDirectory: lib/all_test/
+    displayName: 'run AllTest'
   
