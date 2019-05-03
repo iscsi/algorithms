@@ -26,7 +26,9 @@ phases:
   queue:
     name: 'Hosted Ubuntu 1604'
   steps:
-  - task: CMake@1
+  - script: 'ls'
+    displayName: 'list'
+  - script: 'cmake CMakeLists.txt'
     displayName: 'cmake'
   - script: 'make AllTest'
     displayName: 'Build AllTest'
