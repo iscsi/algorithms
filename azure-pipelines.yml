@@ -28,6 +28,8 @@ phases:
   steps:
   - script: 'ls'
     displayName: 'list'
+  - script: 'dpkg --list | grep compiler'
+    displayName: 'list compilers'
   - script: 'mkdir build'
     displayName: 'mkdir build'
   - script: 'cp CMakeLists.txt build/'
@@ -45,6 +47,4 @@ phases:
   - script: './AllTest.out'
     workingDirectory: lib/all_test/
     displayName: 'run AllTest'
-  - script: 'dpkg --list | grep compiler'
-    displayName: 'list compilers'
   
