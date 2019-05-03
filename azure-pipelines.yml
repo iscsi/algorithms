@@ -28,8 +28,10 @@ phases:
   steps:
   - script: 'ls'
     displayName: 'list'
+  - script: 'cmake generators --help'
+    displayName: 'cmake generators'
   - script: 'cmake CMakeLists.txt'
-    displayName: 'cmake'
+    displayName: 'cmake -DCMAKE_CXX_FLAGS="-stdlib=libstdc++ -std=c++17"'
   - script: 'make AllTest'
     displayName: 'Build AllTest'
   - script: './AllTest.out'
