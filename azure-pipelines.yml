@@ -36,7 +36,7 @@ phases:
     displayName: 'cmake generators'
   - task: CMake@1
     inputs:
-      cmakeArgs: '-DCMAKE_CXX_FLAGS="-stdlib=libstdc++ -std=c++17"'
+      cmakeArgs: '-DCMAKE_CXX_FLAGS="-stdlib=libstdc++ -std=c++11"'
   - script: 'make AllTest'
     displayName: 'Build AllTest'
   - script: './AllTest.out'
