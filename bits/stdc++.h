@@ -47,7 +47,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-
+/*
 #if __cplusplus >= 201103L
 #include <ccomplex>
 #include <cfenv>
@@ -59,7 +59,7 @@
 #include <cuchar>
 #include <cwchar>
 #include <cwctype>
-#endif
+#endif*/
 
 // C++
 #include <algorithm>
@@ -96,9 +96,13 @@
 #include <vector>
 #include <random>
 #include <regex>
-
-#if __cplusplus >= 201103L
 #include <array>
+#include <unordered_map>
+#include <unordered_set>
+
+/*
+#if __cplusplus >= 201103L
+
 #include <atomic>
 #include <chrono>
 #include <codecvt>
@@ -114,13 +118,12 @@
 #include <tuple>
 #include <typeindex>
 #include <type_traits>
-#include <unordered_map>
-#include <unordered_set>
 #endif
 
 #if __cplusplus >= 201402L
 #include <shared_mutex>
 #endif
+*/
 
 #ifdef _MSC_VER
 extern "C" __declspec(dllimport) int __stdcall IsDebuggerPresent();

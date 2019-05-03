@@ -22,27 +22,29 @@ phases:
     workingDirectory: build/lib/all_test/Release/
     displayName: 'Run Tests'
 
-#- phase: LinuxSelfHost
-#  queue:
-#    name: 'Hosted Ubuntu 1604'
-#  steps:
-#  - script: 'ls'
-#    displayName: 'list'
-#  - script: 'mkdir build'
-#    displayName: 'mkdir build'
-#  - script: 'cp CMakeLists.txt build/'
-#    displayName: 'cp cmakelist'
-#  - script: 'cmake generators --help'
-#    displayName: 'cmake generators'
-#  - script: 'export CC=/usr/local/bin/gcc-8'
-#    displayName: 'cmake set gcc'
-#  - script: 'export CXX=/usr/local/bin/g++-8'
-#    displayName: 'cmake set g++'
-#  - script: 'cmake CMakeLists.txt'
-#    displayName: 'cmake'
-#  - script: 'make AllTest'
-#    displayName: 'Build AllTest'
-#  - script: './AllTest.out'
-#    workingDirectory: lib/all_test/
-#    displayName: 'run AllTest'
+- phase: LinuxSelfHost
+  queue:
+    name: 'Hosted Ubuntu 1604'
+  steps:
+  - script: 'ls'
+    displayName: 'list'
+  - script: 'mkdir build'
+    displayName: 'mkdir build'
+  - script: 'cp CMakeLists.txt build/'
+    displayName: 'cp cmakelist'
+  - script: 'cmake generators --help'
+    displayName: 'cmake generators'
+  - script: 'export CC=/usr/local/bin/gcc-7'
+    displayName: 'set gcc version'
+  - script: 'export CXX=/usr/local/bin/g++-7'
+    displayName: 'set g++ version'
+  - script: 'cmake CMakeLists.txt'
+    displayName: 'cmake'
+  - script: 'make AllTest'
+    displayName: 'Build AllTest'
+  - script: './AllTest.out'
+    workingDirectory: lib/all_test/
+    displayName: 'run AllTest'
+  - script: 'dpkg --list | grep compiler'
+    displayName: 'list compilers'
   
