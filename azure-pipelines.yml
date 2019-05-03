@@ -44,6 +44,8 @@ phases:
     displayName: 'cmake'
   - script: 'make AllTest'
     displayName: 'Build AllTest'
+  - script: 'ls -R'
+    displayName: 'list recursive'
   - script: './AllTest.out'
     workingDirectory: lib/all_test/
     displayName: 'run AllTest'
