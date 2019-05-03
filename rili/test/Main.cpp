@@ -1,4 +1,4 @@
-#include <rili/Test/Main.h>
+#include <rili/test/Main.h>
 #include <rili/Test.h>
 
 int rili::test::main(int argc, char* argv[])
