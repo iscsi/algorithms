@@ -46,7 +46,11 @@ phases:
     displayName: 'Build AllTest'
   - script: 'ls -R'
     displayName: 'list recursive'
-  - script: './lib/all_test/AllTest'
+  - script: 'cd lib/all_test'
+    displayName: 'set all test directory'
+  - script: 'ls -l'
+    displayName: 'list detailed'
+  - script: './AllTest'
     workingDirectory: lib/all_test/
     displayName: 'run AllTest'
   
