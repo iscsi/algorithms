@@ -1,9 +1,6 @@
 resources:
 - repo: self
 
-variables:
-    ISCSI_CI: 'ISCSI_CI'
-
 phases:
 
 - phase: Windows64bit
@@ -24,3 +21,16 @@ phases:
   - script: 'AllTest.exe'
     workingDirectory: build/lib/all_test/Release/
     displayName: 'Run Tests'
+
+- phase: LinuxSelfHost
+  queue:
+    name: 'Hosted Ubuntu 1604'
+  steps:
+  - task: CMake@1
+    displayName: 'cmake'
+  - script: 'make AllTest'
+    displayName: 'Build AllTest'
+  - script: './AllTest.out'
+    workingDirectory: lib/all_test/
+    displayName: 'run AllTest'
+    
