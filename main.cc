@@ -7,12 +7,6 @@
 
 #include <exception>
 
-void crash()
-{
-	int* alma = reinterpret_cast<int*>(0x42);
-	*alma = 5;
-}
-
 #ifdef NDEBUG
 inline void examples_assert(bool exprResult) {
 	if (!exprResult) {
@@ -76,34 +70,5 @@ int main(int argc, char** argv)
 	});
 	getchar();
 	return 0;
-	//crash();
-	//gcd test
-	vector<int> eInt = eulerTotientInterval(100);
-	vector<bool> mInt = mobiusSieveInterval(100);
-
-	
-
-	fore(i, 1, 100)
-	{
-		int tmp = eulerTotient(i);
-		EXPECT_EQ(tmp, eInt[i]);
-// 		if (eulerTotient(i) != eInt[i])
-// 		{
-// 			int alma = 42;
-// 		}
-	}
-
-	try
-	{
-		invoke(crash);
-	}
-	catch (exception& e)
-	{
-		cout << "Standard exception: " << e.what() << endl;
-	}
-
-	int g2 = invoke(gcd, 5, 7);
-	int g = gcd(5, 7);
-	
 	return 0;
 }
