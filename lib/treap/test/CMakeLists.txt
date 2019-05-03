@@ -1,4 +1,4 @@
-file(GLOB_RECURSE SEGMENT_TREE_SRC "../src/*.h")
+file(GLOB_RECURSE TREAP_SRC "../src/*.h")
 source_group("src" FILES ${TREAP_SRC})
 add_executable(TreapTest treap_test.cc treap_test.h ../treap_all.h ${TREAP_SRC})
 add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
