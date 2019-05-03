@@ -34,9 +34,8 @@ phases:
     displayName: 'cp cmakelist'
   - script: 'cmake generators --help'
     displayName: 'cmake generators'
-  - task: CMake@1
-    inputs:
-      cmakeArgs: '-DCMAKE_CXX_FLAGS="-stdlib=libstdc++ -std=c++11"'
+  - script: 'cmake CMakeLists.txt'
+    displayName: 'cmake'
   - script: 'make AllTest'
     displayName: 'Build AllTest'
   - script: './AllTest.out'
