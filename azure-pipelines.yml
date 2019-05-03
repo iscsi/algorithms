@@ -28,6 +28,10 @@ phases:
   steps:
   - script: 'ls'
     displayName: 'list'
+  - script: 'mkdir build'
+    displayName: 'mkdir build'
+  - script: 'cp CMakeLists.txt build/'
+    displayName: 'cp cmakelist'
   - script: 'cmake generators --help'
     displayName: 'cmake generators'
   - task: CMake@1
