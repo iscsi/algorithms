@@ -16,6 +16,7 @@ TEST(TreapTest, TreapSmallTest)
 }
 
 
+//compare treap vs set performance
 TEST(TreapTest, TreapKeyTestVsSetTreapTest)
 {
 	vector<Treap::Node> v;
@@ -25,29 +26,58 @@ TEST(TreapTest, TreapKeyTestVsSetTreapTest)
 
 	Treap::Node* t = nullptr;
 	forn(i, ITEM_COUNT)
-	{
 		Treap::insert(t, &v[i]);
-	}
-	
+		
 	forn(i, ITEM_COUNT)
-	{
-		ASSERT_EQ(Treap::getCount(t,i), 1);
-	}
+		ASSERT_EQ(Treap::getCount(t, i), 1);
 }
 
 
 TEST(TreapTest, TreapKeyTestVsSetSetTest)
 {
 	const uint32_t ITEM_COUNT = 200000;
-	
+
 	set<uint32_t> s;
 	forn(i, ITEM_COUNT)
-	{
 		s.insert(i);
-	}
+		
+	forn(i, ITEM_COUNT)
+		ASSERT_EQ(s.count(i), 1);
+}
+
+
+
+//compare treap vs multiset performance
+TEST(TreapTest, TreapKeyTestVsMSetTreapTest)
+{
+	vector<Treap::Node> v;
+	const uint32_t ITEM_COUNT = 100000;
+	forn(r,3)
+		forn(i, ITEM_COUNT)
+			v.emplace_back(Treap::Node(i));
+
+	Treap::Node* t = nullptr;
+	forn(i, v.size())
+		Treap::insert(t, &v[i]);
 
 	forn(i, ITEM_COUNT)
-	{
-		ASSERT_EQ(s.count(i), 1);
-	}
+		ASSERT_EQ(Treap::getCount(t, i), 3);
 }
+
+
+TEST(TreapTest, TreapKeyTestVsMSetMSetTest)
+{
+	const uint32_t ITEM_COUNT = 100000;
+
+	multiset<uint32_t> ms;
+	forn(r, 3)
+		forn(i, ITEM_COUNT)
+		ms.insert(i);
+
+	forn(i, ITEM_COUNT)
+		ASSERT_EQ(ms.count(i), 3);
+}
+
+
+
+
