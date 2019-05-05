@@ -99,6 +99,7 @@
 #include <array>
 #include <unordered_map>
 #include <unordered_set>
+#include <limits>
 
 /*
 #if __cplusplus >= 201103L
@@ -126,6 +127,7 @@
 */
 
 #ifdef _MSC_VER
+#include<intrin.h>
 extern "C" __declspec(dllimport) int __stdcall IsDebuggerPresent();
 
 uint32_t __inline ctz(uint32_t val)
