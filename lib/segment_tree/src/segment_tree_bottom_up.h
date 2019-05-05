@@ -7,15 +7,15 @@
 //resource: https://codeforces.com/blog/entry/18051
 
 template<typename T>
-struct SegmentTreeSimple
+struct SegmentTreeBUSimple
 {
 	size_t N;
 	vector<T> data;
-	SegmentTreeSimple(size_t S) : N(S)
+	SegmentTreeBUSimple(size_t S) : N(S)
 	{
 		data.resize(2 * N, numeric_limits<T>::max());
 	}
-	SegmentTreeSimple(const vector<T>& in) : N(in.size())
+	SegmentTreeBUSimple(const vector<T>& in) : N(in.size())
 	{
 		data.resize(2*N, numeric_limits<T>::max());
 		copy(in.begin(), in.end(), data.begin() + N);
@@ -51,17 +51,17 @@ struct SegmentTreeSimple
 //resource: https://codeforces.com/blog/entry/18051
 
 template<typename T>
-struct SegmentTreeLazy
+struct SegmentTreeBULazy
 {
 	size_t N;
 	vector<T> data;
 	vector<T> lazy;
-	SegmentTreeLazy(size_t S) : N(S)
+	SegmentTreeBULazy(size_t S) : N(S)
 	{
 		data.resize(2 * N, numeric_limits<T>::max());
 		lazy.resize(N, static_cast<T>(0));
 	}
-	SegmentTreeLazy(const vector<T>& in) : N(in.size())
+	SegmentTreeBULazy(const vector<T>& in) : N(in.size())
 	{
 		data.resize(2 * N, numeric_limits<T>::max());
 		lazy.resize(N, static_cast<T>(0));
