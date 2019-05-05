@@ -124,6 +124,17 @@ namespace Treap
 	{
 		return new Node(val);
 	}
+
+	uint32_t getCount(pNode& t, uint32_t key)
+	{
+		if (t == nullptr)
+			return 0;
+		if (t->value < key)
+			return getCount(t->right, key);
+		if (t->value > key)
+			return getCount(t->left, key);
+		return getCount(t->left, key) + 1 + getCount(t->right, key);
+	}
 }
 
 
