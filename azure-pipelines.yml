@@ -36,23 +36,23 @@ phases:
     displayName: 'cp CMakeLists'
   - script: 'cmake generators --help'
     displayName: 'cmake generators'
-#  - script: 'export CC=/usr/local/bin/gcc-7'
-#    displayName: 'set gcc version'
-#  - script: 'export CXX=/usr/local/bin/g++-7'
-#    displayName: 'set g++ version'
-#  - script: 'cmake CMakeLists.txt'
-#    displayName: 'cmake'
-  - task: CMake@1
-    displayName: 'CMake@1'
+  - script: 'export CC=/usr/local/bin/gcc-7'
+    displayName: 'set gcc version'
+  - script: 'export CXX=/usr/local/bin/g++-7'
+    displayName: 'set g++ version'
+  - script: 'cmake CMakeLists.txt'
+    displayName: 'cmake'
+#  - task: CMake@1
+#    displayName: 'CMake@1'
   - script: 'make AllTest'
     displayName: 'Build AllTest'
   - script: 'ls -R'
     displayName: 'list recursive'
-  - script: 'cd build/lib/all_test'
+  - script: 'cd lib/all_test'
     displayName: 'set all test directory'
   - script: 'ls -l'
     displayName: 'list detailed'
   - script: './AllTest'
-    workingDirectory: build/lib/all_test/
+    workingDirectory: lib/all_test/
     displayName: 'run AllTest'
   
