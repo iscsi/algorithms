@@ -1,5 +1,7 @@
 #pragma once
 #include <my_template.h>
+#include <lib/performance.h>
+
 /*#include <windows.h>
 
 
@@ -93,8 +95,6 @@ vector<T> generateVector(size_t _size, T from, T to)
 	return res;
 }
 
-
-
 /*
 void generate(int seed = 0)
 {
@@ -150,3 +150,64 @@ void generateTree2(int seed = 0)
 		printf("%d %d\n", perm[a], perm[b]);
 	}
 }*/
+
+template<typename T>
+struct GeometricProgression
+{
+	T start;
+	T scale;
+	GeometricProgression(T _start, T _scale):
+	start(_start),
+	scale(_scale){}
+	T get(uint32_t n) const
+	{
+		T as = scale, res = start;
+		while (n)
+		{
+			if (n)
+				res *= as;
+			as * = as;
+			n >>= 1;
+		}
+		return res;
+	}
+	T getStart() const
+	{
+		return start;
+	}
+	T getNext(T act) const
+	{
+		return act * scale;
+	}
+};
+
+template<typename T>
+struct ArithmeticProgression
+{
+	T start;
+	T diff;
+	ArithmeticProgression(T _start, T _diff) :
+		start(_start),
+		scale(diff) {}
+	T get(uint32_t n) const
+	{
+		T ad = diff, res = start;
+		while (n)
+		{
+			if (n)
+				res += ad;
+			ad *= 2;
+			n >>= 1;
+		}
+		return res;
+	}
+	T getStart() const
+	{
+		return start;
+	}
+	T getNext(T act) const
+	{
+		return act + diff;
+	}
+};
+
