@@ -30,7 +30,7 @@ inline std::ostream& blue(std::ostream &s)
 {
 #if defined(WIN32)
 	setAttributes(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-#else
+	if (isGitlabCi())
 		writeConsole("\x1b[94m");
 #endif
 	return s;
@@ -40,8 +40,10 @@ inline std::ostream& red(std::ostream &s)
 {
 #if defined(WIN32)
 	setAttributes(FOREGROUND_RED | FOREGROUND_INTENSITY);
-#else
+	if (isGitlabCi())
 		writeConsole("\x1b[91m");
+#else
+	s << "\x1b[91m";
 #endif
 	return s;
 }
@@ -50,8 +52,10 @@ inline std::ostream& green(std::ostream &s)
 {
 #if defined(WIN32)
 	setAttributes(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-#else
+	if (isGitlabCi())
 		writeConsole("\x1b[92m");
+#else
+	s << "\x1b[91m";
 #endif
 	return s;
 }
@@ -60,7 +64,7 @@ inline std::ostream& yellow(std::ostream &s)
 {
 #if defined(WIN32)
 	setAttributes(FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY);
-#else
+	if (isGitlabCi())
 		writeConsole("\x1b[93m");
 #endif
 	return s;
@@ -70,7 +74,7 @@ inline std::ostream& white(std::ostream &s)
 {
 #if defined(WIN32)
 	setAttributes(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-#else
+	if (isGitlabCi())
 		writeConsole("\x1b[97m");
 #endif
 	return s;
@@ -80,7 +84,7 @@ inline std::ostream& reset(std::ostream &s)
 {
 #if defined(WIN32)
 	setAttributes(FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
-#else
+	if (isGitlabCi())
 		writeConsole("\x1b[0m");
 #endif
 	return s;
