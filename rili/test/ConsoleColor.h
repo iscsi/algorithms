@@ -42,8 +42,6 @@ inline std::ostream& red(std::ostream &s)
 	setAttributes(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	if (isGitlabCi())
 		writeConsole("\x1b[91m");
-#else
-	s << "\x1b[91m";
 #endif
 	return s;
 }
@@ -54,8 +52,6 @@ inline std::ostream& green(std::ostream &s)
 	setAttributes(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	if (isGitlabCi())
 		writeConsole("\x1b[92m");
-#else
-	s << "\x1b[91m";
 #endif
 	return s;
 }
