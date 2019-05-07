@@ -21,6 +21,8 @@ phases:
   - script: 'AllTest.exe'
     workingDirectory: build/lib/all_test/Release/
     displayName: 'Run Tests'
+  - script: 'Get-PSReadlineOption'
+    displayName 'PSReadlineOption'
 
 - phase: LinuxSelfHost
   queue:
@@ -28,6 +30,8 @@ phases:
   steps:
   - script: 'ls'
     displayName: 'list'
+  - script: 'Get-PSReadlineOption'
+    displayName 'PSReadlineOption'
   - script: 'dpkg --list | grep compiler'
     displayName: 'list compilers'
   - script: 'mkdir build'
