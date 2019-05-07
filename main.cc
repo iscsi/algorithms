@@ -93,6 +93,7 @@ int main(int argc, char** argv)
 	GeometricProgression<uint32_t> gp(100, 2);
 	const int numberOfTest = 14;
 	vector<pair< uint32_t, vector<double > > > res(numberOfTest);
+	vector<pair< uint32_t, double> > rt(numberOfTest);
 	vector<double> res2(numberOfTest), res3(numberOfTest), res4(numberOfTest), res5(numberOfTest),res6(numberOfTest), res7(numberOfTest), res8(numberOfTest);
 
 	forn(i, numberOfTest)
@@ -115,9 +116,11 @@ int main(int argc, char** argv)
 		res6[i] = actsum / (log(res[i].first));
 		res7[i] = actsum / (log(res[i].first)*log(res[i].first));
 		res8[i] = actsum / (sqrt(res[i].first));
+		rt[i].first = res[i].first;
+		rt[i].second = actsum;
 	}
 
-	
+	performance::Complexity co = performance::calculateComplexity(rt);
 
 
 	getchar();
