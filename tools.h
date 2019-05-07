@@ -166,7 +166,7 @@ struct GeometricProgression
 		{
 			if (n)
 				res *= as;
-			as * = as;
+			as *= as;
 			n >>= 1;
 		}
 		return res;
