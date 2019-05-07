@@ -49,18 +49,77 @@ void perfTest(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& st
 	end = std::chrono::steady_clock::now();
 }
 
+void perfTest2(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& start, std::chrono::time_point<std::chrono::steady_clock>& end)
+{
+	start = std::chrono::steady_clock::now();
+	vector<uint32_t> w = generateVector<uint32_t>(N, 0, numeric_limits<uint32_t>::max());
+
+	vector<Treap::Node> v;
+	const uint32_t ITEM_COUNT = N;
+	forn(i, ITEM_COUNT)
+		v.emplace_back(Treap::Node(w[i]));
+
+	Treap::Node* t = nullptr;
+	forn(i, ITEM_COUNT)
+		Treap::insert(t, &v[i]);
+	end = std::chrono::steady_clock::now();
+}
+
+void perfTest3(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& start, std::chrono::time_point<std::chrono::steady_clock>& end)
+{
+	vector<uint32_t> w = generateVector<uint32_t>(N, 0, numeric_limits<uint32_t>::max());
+
+	vector<Treap::Node> v;
+	const uint32_t ITEM_COUNT = N;
+	forn(i, ITEM_COUNT)
+		v.emplace_back(Treap::Node(w[i]));
+
+	Treap::Node* t = nullptr;
+	forn(i, ITEM_COUNT)
+		Treap::insert(t, &v[i]);
+
+	vector<uint32_t> q = generateVector<uint32_t>(100000, 0, numeric_limits<uint32_t>::max());
+
+	start = std::chrono::steady_clock::now();
+
+	forn(i, q.size())
+		Treap::getCount(t, q[i]);
+
+	end = std::chrono::steady_clock::now();
+}
+
 int main(int argc, char** argv) 
 {
-	GeometricProgression<uint32_t> gp(10, 10);
-	vector<double > res(6);
+	GeometricProgression<uint32_t> gp(100, 2);
+	const int numberOfTest = 14;
+	vector<pair< uint32_t, vector<double > > > res(numberOfTest);
+	vector<double> res2(numberOfTest), res3(numberOfTest), res4(numberOfTest), res5(numberOfTest),res6(numberOfTest), res7(numberOfTest), res8(numberOfTest);
+
+	forn(i, numberOfTest)
+	{
+		res[i].first = gp.get(i);
+		double actsum = 0;
+		forn(j, 5)
+		{
+			double tmp = performance::performanceTest(perfTest3, res[i].first);
+			res[i].second.push_back(tmp);
+			actsum += tmp;
+		}
+		//actsum /= 5;
+		sort(all(res[i].second));
+		actsum = res[i].second[2];
+		res2[i] = actsum / (res[i].first * log(res[i].first));
+		res3[i] = actsum / (res[i].first);
+		res4[i] = actsum / (res[i].first * log(res[i].first) * log(res[i].first));
+		res5[i] = actsum / (static_cast<double>(res[i].first) * res[i].first);
+		res6[i] = actsum / (log(res[i].first));
+		res7[i] = actsum / (log(res[i].first)*log(res[i].first));
+		res8[i] = actsum / (sqrt(res[i].first));
+	}
 
 	
-	forn(i, 6)
-	{
-		forn(j, 5)
-			res[i] += performance::performanceTest(perfTest, gp.get(i));
-		res[i] /= 5;
-	}
+
+
 	getchar();
 	return 0;
 }
