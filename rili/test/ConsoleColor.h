@@ -58,8 +58,10 @@ inline std::ostream& green(std::ostream &s)
 	setAttributes(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	if (isGitlabCi())
 		writeConsole("\x1b[92m");
+	//else if (isPowerShell())
+	//	writeConsole("##[section]");
 #endif
-	return s;
+	return s << "##[section]";
 }
 
 inline std::ostream& yellow(std::ostream &s)
