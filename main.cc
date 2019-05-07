@@ -41,34 +41,26 @@ TEST(EulerTotient, TestEulerTotient)
 
 TEST_F(ExpectSuccess, NumberOfTestGreaterThanZero) { EXPECT_GT(rili::test::TestStorage::getInstance().size(), 0u); }
 
+void perfTest(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& start, std::chrono::time_point<std::chrono::steady_clock>& end)
+{
+	vector<uint32_t> v = generateVector<uint32_t>(N, 0, numeric_limits<uint32_t>::max());
+	start = std::chrono::steady_clock::now();
+	sort(all(v));
+	end = std::chrono::steady_clock::now();
+}
+
 int main(int argc, char** argv) 
 {
-/*#ifdef HOME
-	if(IsDebuggerPresent())
+	GeometricProgression<uint32_t> gp(10, 10);
+	vector<double > res(6);
+
+	
+	forn(i, 6)
 	{
-		freopen("../in.txt", "rb", stdin);
-		freopen("../out.txt", "wb", stdout);
+		forn(j, 5)
+			res[i] += performance::performanceTest(perfTest, gp.get(i));
+		res[i] /= 5;
 	}
-	ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.precision(10);
-    cout << fixed;
-#endif*/
-
-	return rili::test::main(argc, argv);
-
-	rili::test::runner::run([](std::string const& /*fixture*/, std::string const& scenario) {
-		if (std::regex_match(scenario, std::regex("(SKIP_)(.*)"))) {
-			return rili::test::runner::FilteringResult::Skip;
-		}
-		else if (std::regex_match(scenario, std::regex("(DISABLE_)(.*)"))) {
-			return rili::test::runner::FilteringResult::Disable;
-		}
-		else {
-			return rili::test::runner::FilteringResult::Run;
-		}
-	});
 	getchar();
-	return 0;
 	return 0;
 }

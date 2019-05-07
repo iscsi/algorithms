@@ -164,7 +164,7 @@ struct GeometricProgression
 		T as = scale, res = start;
 		while (n)
 		{
-			if (n)
+			if (n&1)
 				res *= as;
 			as *= as;
 			n >>= 1;
