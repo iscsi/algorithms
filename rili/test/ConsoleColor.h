@@ -59,7 +59,7 @@ inline std::ostream& green(std::ostream &s)
 	if (isGitlabCi())
 		writeConsole("\x1b[92m");
 	else if (isPowerShell())
-		writeConsole("##vso[task.complete result=Succeeded;]");
+		writeConsole("-ForefroundColor Green ");
 #endif
 	return s;
 }
