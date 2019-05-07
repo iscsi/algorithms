@@ -188,7 +188,7 @@ struct ArithmeticProgression
 	T diff;
 	ArithmeticProgression(T _start, T _diff) :
 		start(_start),
-		scale(diff) {}
+		diff(_diff) {}
 	T get(uint32_t n) const
 	{
 		T ad = diff, res = start;
