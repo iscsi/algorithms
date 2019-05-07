@@ -13,6 +13,12 @@ inline bool isGitlabCi()
 	return result;
 }
 
+inline bool isPowerShell()
+{
+	static bool result = true;
+	return result;
+}
+
 inline void setAttributes(unsigned int attributes)
 {
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -52,6 +58,8 @@ inline std::ostream& green(std::ostream &s)
 	setAttributes(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	if (isGitlabCi())
 		writeConsole("\x1b[92m");
+	else if (isPowerShell())
+		writeConsole("##vso[task.setvariable result=Succeeded]");
 #endif
 	return s;
 }
