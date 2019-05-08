@@ -3,7 +3,7 @@
 #include <rili/test/Main.h>
 #include <lib/segment_tree/segment_tree_all.h>
 
-TEST(SegmentTreeSimpleTest, SegmentTreeSimpleSmallBuildTest)
+TEST(SegmentTreeBUSimpleTest, SegmentTreeBUSimpleSmallBuildTest)
 {
 	SegmentTreeBUSimple<uint32_t> st({ 5, 0, 7, 4, 3, 1, 9 });
 	EXPECT_EQ(st.query(1, 2), 0);
@@ -11,7 +11,7 @@ TEST(SegmentTreeSimpleTest, SegmentTreeSimpleSmallBuildTest)
 	EXPECT_EQ(st.query(6, 7), 9);
 }
 
-TEST(SegmentTreeLazyTest, SegmentTreeLazySmallBuildTest)
+TEST(SegmentTreeBULazyTest, SegmentTreeBULazySmallBuildTest)
 {
 	SegmentTreeBULazy<uint32_t> stl({ 5, 0, 7, 4, 3, 1, 9 });
 	EXPECT_EQ(stl.query(1, 2), 0);
@@ -20,7 +20,7 @@ TEST(SegmentTreeLazyTest, SegmentTreeLazySmallBuildTest)
 }
 
 
-TEST(SegmentTreeLazyTest, SegmentTreeLazySmallUpdateTest)
+TEST(SegmentTreeBULazyTest, SegmentTreeBULazySmallUpdateTest)
 {
 	SegmentTreeBULazy<uint32_t> stl({ 5, 0, 7, 4, 3, 1, 9 });
 	EXPECT_EQ(stl.query(0, 7), 0);
@@ -32,3 +32,12 @@ TEST(SegmentTreeLazyTest, SegmentTreeLazySmallUpdateTest)
 	EXPECT_EQ(stl.query(0, 4), 2);
 	EXPECT_EQ(stl.query(0, 7), 1);
 }
+/*
+TEST(SegmentTreeSimpleTest, SegmentTreeSimpleSmallBuildTest)
+{
+	SegmentTreeLazy<uint32_t> st({ 5, 0, 7, 4, 3, 1, 9 });
+	EXPECT_EQ(st.query(1, 2), 0);
+	EXPECT_EQ(st.query(3, 6), 1);
+	EXPECT_EQ(st.query(6, 7), 9);
+}*/
+
