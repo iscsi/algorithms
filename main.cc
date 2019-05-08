@@ -41,17 +41,17 @@ TEST(EulerTotient, TestEulerTotient)
 
 TEST_F(ExpectSuccess, NumberOfTestGreaterThanZero) { EXPECT_GT(rili::test::TestStorage::getInstance().size(), 0u); }
 
-void perfTest(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& start, std::chrono::time_point<std::chrono::steady_clock>& end)
+void perfTest(uint32_t N, performance::performancePoint& start, performance::performancePoint& end)
 {
 	vector<uint32_t> v = generateVector<uint32_t>(N, 0, numeric_limits<uint32_t>::max());
-	start = std::chrono::steady_clock::now();
+	start = performance::now();
 	sort(all(v));
-	end = std::chrono::steady_clock::now();
+	end = performance::now();
 }
 
-void perfTest2(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& start, std::chrono::time_point<std::chrono::steady_clock>& end)
+void perfTest2(uint32_t N, performance::performancePoint& start, performance::performancePoint& end)
 {
-	start = std::chrono::steady_clock::now();
+	start = performance::now();
 	vector<uint32_t> w = generateVector<uint32_t>(N, 0, numeric_limits<uint32_t>::max());
 
 	vector<Treap::Node> v;
@@ -62,10 +62,10 @@ void perfTest2(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& s
 	Treap::Node* t = nullptr;
 	forn(i, ITEM_COUNT)
 		Treap::insert(t, &v[i]);
-	end = std::chrono::steady_clock::now();
+	end = performance::now();
 }
 
-void perfTest3(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& start, std::chrono::time_point<std::chrono::steady_clock>& end)
+void perfTest3(uint32_t N, performance::performancePoint& start, performance::performancePoint& end)
 {
 	vector<uint32_t> w = generateVector<uint32_t>(N, 0, numeric_limits<uint32_t>::max());
 
@@ -80,12 +80,12 @@ void perfTest3(uint32_t N, std::chrono::time_point<std::chrono::steady_clock>& s
 
 	vector<uint32_t> q = generateVector<uint32_t>(100000, 0, numeric_limits<uint32_t>::max());
 
-	start = std::chrono::steady_clock::now();
+	start = performance::now();
 
 	forn(i, q.size())
 		Treap::getCount(t, q[i]);
 
-	end = std::chrono::steady_clock::now();
+	end = performance::now();
 }
 
 int main(int argc, char** argv) 

@@ -4,17 +4,23 @@
 namespace performance
 {
 	using namespace std::chrono;
+	typedef time_point<steady_clock> performancePoint;
+
+	performancePoint now()
+	{
+		return steady_clock::now();
+	}
 
 	double performanceTest(std::function<void(uint32_t)> f, uint32_t n)
 	{
-		time_point<steady_clock> start = steady_clock::now();
+		performancePoint start = steady_clock::now();
 		f(n);
 		return static_cast<double>(duration_cast<microseconds>(steady_clock::now() - start).count());
 	}
 
-	double performanceTest(std::function<void(uint32_t, time_point<steady_clock>&, time_point<steady_clock>&)> f, uint32_t n)
+	double performanceTest(std::function<void(uint32_t, performancePoint&, performancePoint&)> f, uint32_t n)
 	{
-		time_point<steady_clock> start, end;
+		performancePoint start, end;
 		f(n, start, end);
 		return static_cast<double>(duration_cast<microseconds>(end - start).count());
 	}
