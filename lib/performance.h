@@ -97,12 +97,12 @@ namespace performance
 			umin(mi, tmp);
 		}
 		double res = 0;
-		double mid = (mx + mi) / 2;
+		//double mid = (mx + mi) / 2;
 		//normalize the result to [-1,1]
 		for (auto& av : data)
 		{
-			double tmp = (f(av.first, av.second) - mid) / mid;
-			res += mid * mid;
+			double tmp = f(av.first, av.second) / mx;
+			res += abs(1.0 - tmp);
 		}
 		return res;
 	}
