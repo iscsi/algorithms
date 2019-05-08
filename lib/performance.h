@@ -27,7 +27,6 @@ namespace performance
 
 	enum class Complexity : uint8_t
 	{
-		Complexity_Start = 0,
 		Constant = 0,
 		Logarithmic = 1,
 		SquareRoot = 2,
@@ -82,7 +81,7 @@ namespace performance
 		default:
 			break;
 		}
-		return [](uint32_t n, double d) { return d; };
+		return [](uint32_t n, double d) { return -1.0; };
 	}
 
 	double calculateComplexityScore(Complexity complexity, const vector<pair<uint32_t, double> >& data)
@@ -96,9 +95,11 @@ namespace performance
 			umax(mx, tmp);
 			umin(mi, tmp);
 		}
-		double res = 0;
-		//double mid = (mx + mi) / 2;
-		//normalize the result to [-1,1]
+
+		if(mx < 1e-9)
+			return numeric_limits<double>::max();//invalid
+
+   		double res = 0;
 		for (auto& av : data)
 		{
 			double tmp = f(av.first, av.second) / mx;
@@ -109,7 +110,7 @@ namespace performance
 
 	Complexity calculateComplexity( const vector<pair<uint32_t, double> >& data)
 	{	
-		Complexity res = Complexity::Complexity_Start;
+		Complexity res = Complexity::Complexity_End;
 		double bestScore = numeric_limits<double>::max();
 		forn(i, Complexity::Complexity_End)
 		{
@@ -120,6 +121,7 @@ namespace performance
 				bestScore = actualScore;
 			}
 		}
+		assert(res != Complexity::Complexity_End);
 		return res;
 	}
 }
