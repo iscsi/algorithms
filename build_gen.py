@@ -8,4 +8,4 @@ if not os.path.exists("build"):
     os.makedirs("build")
 
 os.chdir("build")
-subprocess.call('cmake -G "Visual Studio 14 2015 Win64" ..\\')
+subprocess.call('cmake -G "Visual Studio 15 2017 Win64" ..\\')

@@ -56,32 +56,27 @@ TEST(SegmentTreeLazyTest, SegmentTreeLazySmallUpdateTest)
 
 TEST(SegmentTreeCrossValidateTest, SegmentTreeCrossValidateTestSmall)
 {
-	int segmentTreeS = getRandom<uint32_t>(3, 7);
-	auto segmentTreeData = generateVector<uint32_t>(segmentTreeS, 2, 5);
+	int segmentTreeS = getRandom<uint32_t>(3, 50000);
+	auto segmentTreeData = generateVector<uint32_t>(segmentTreeS, 2, 10000);
 
 	SegmentTreeBULazy<uint32_t> sbul(segmentTreeData);
 	SegmentTreeLazy<uint32_t> sl(segmentTreeData);
 
 	forn(i, 1000)
 	{
-		uint32_t l = getRandom<uint32_t>(0, segmentTreeS-1);
-		uint32_t r = getRandom<uint32_t>(l+1, segmentTreeS);
+		uint32_t l = getRandom<uint32_t>(0, segmentTreeS - 1);
+		uint32_t r = getRandom<uint32_t>(l + 1, segmentTreeS);
 		if (i & 1)
 		{
-			if (sbul.query(l, r) != sl.query(l, r))
-			{
-				int alma = 42;
-			}
+			EXPECT_EQ(sbul.query(l, r), sl.query(l, r));
 		}
 		else
 		{
-			uint32_t val = getRandom<uint32_t>(0, 5);
+			uint32_t val = getRandom<uint32_t>(0, 10000);
 			sbul.modify(l, r, val);
 			sl.update(l, r, val);
 		}
-			
 	}
-
 }
 
 

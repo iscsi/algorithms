@@ -45,12 +45,9 @@ struct SegmentTreeLazy
 	{
 		if (lazy[pos])
 		{
-			if (2 * pos >= N)
-			{
-				data[2 * pos] += lazy[pos];
-				data[2 * pos + 1] += lazy[pos];
-			}
-			else
+			data[2 * pos] += lazy[pos];
+			data[2 * pos + 1] += lazy[pos];
+			if (2 * pos < N)
 			{
 				lazy[2 * pos] += lazy[pos];
 				lazy[2 * pos + 1] += lazy[pos];
