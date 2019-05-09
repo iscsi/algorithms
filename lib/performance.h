@@ -11,6 +11,13 @@ namespace performance
 		return steady_clock::now();
 	}
 
+	double performanceTest(std::function<void()> f)
+	{
+		performancePoint start = steady_clock::now();
+		f();
+		return static_cast<double>(duration_cast<microseconds>(steady_clock::now() - start).count());
+	}
+
 	double performanceTest(std::function<void(uint32_t)> f, uint32_t n)
 	{
 		performancePoint start = steady_clock::now();
@@ -40,7 +47,42 @@ namespace performance
 		Exponential = 10,
 		Factorial = 11,
 		Complexity_End = Factorial + 1,
+
 	};
+
+	string toString(Complexity complexity) 
+	{
+		switch (complexity)
+		{
+		case performance::Complexity::Constant:
+			return "Constant";
+		case performance::Complexity::Logarithmic:
+			return "Logarithmic";
+		case performance::Complexity::SquareRoot:
+			return "SquareRoot";
+		case performance::Complexity::Linear:
+			return "Linear";
+		case performance::Complexity::NLogN:
+			return "NLogN";
+		case performance::Complexity::NLog2N:
+			return "NLog2N";
+		case performance::Complexity::NSqrtN:
+			return "NSqrtN";
+		case performance::Complexity::Square:
+			return "Square";
+		case performance::Complexity::Cube:
+			return "Cube";
+		case performance::Complexity::PolyN:
+			return "PolyN";
+		case performance::Complexity::Exponential:
+			return "Exponential";
+		case performance::Complexity::Factorial:
+			return "Factorial";
+		default:
+			break;
+		}
+		return "Invalid";
+	}
 
 	std::function<double(uint32_t, double)> getComplexityFunction(Complexity complexity)
 	{
@@ -60,7 +102,7 @@ namespace performance
 			return [](uint32_t n, double d) 
 			{ 
 				double ltmp = log(static_cast<double> (n));
-				return d / (ltmp * ltmp); 
+				return d / (n * ltmp * ltmp); 
 			};
 		case performance::Complexity::NSqrtN:
 			return [](uint32_t n, double d)
@@ -103,7 +145,7 @@ namespace performance
 		for (auto& av : data)
 		{
 			double tmp = f(av.first, av.second) / mx;
-			res += abs(1.0 - tmp);
+			res += sqrt(abs(1.0 - tmp));
 		}
 		return res;
 	}

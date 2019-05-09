@@ -79,4 +79,130 @@ TEST(SegmentTreeCrossValidateTest, SegmentTreeCrossValidateTestSmall)
 	}
 }
 
+TEST(SegmentTreeQueryComplexityTest, SegmentTreeQueryComplexityTest)
+{
+	GeometricProgression<uint32_t> gp(100, 2);
+	const int numberOfTest = 14;
+	
+	vector<pair< uint32_t, double> > rt(numberOfTest);
+	
+	forn(i, numberOfTest)
+	{
+		uint32_t segmentTreeS = gp.get(i);
+		auto segmentTreeData = generateVector<uint32_t>(segmentTreeS, 2, 10000);
 
+		SegmentTreeLazy<uint32_t> sl(segmentTreeData);
+
+		auto queryTest = [&sl, &segmentTreeS]()
+		{
+			forn(i, 5000)
+			{
+				uint32_t l = getRandom<uint32_t>(0, segmentTreeS - 1);
+				uint32_t r = getRandom<uint32_t>(l + 1, segmentTreeS);
+				sl.query(l, r);
+			}
+		};
+
+		double tmp = performance::performanceTest(queryTest);
+		rt[i] = { segmentTreeS, tmp };
+	}
+
+	EXPECT_EQ(performance::Complexity::Logarithmic ,performance::calculateComplexity(rt));
+}
+
+
+TEST(SegmentTreeUpdateComplexityTest, SegmentTreeUpdateComplexityTest)
+{
+	GeometricProgression<uint32_t> gp(100, 2);
+	const int numberOfTest = 14;
+
+	vector<pair< uint32_t, double> > rt(numberOfTest);
+
+	forn(i, numberOfTest)
+	{
+		uint32_t segmentTreeS = gp.get(i);
+		auto segmentTreeData = generateVector<uint32_t>(segmentTreeS, 2, 10000);
+
+		SegmentTreeLazy<uint32_t> sl(segmentTreeData);
+
+		auto queryTest = [&sl, &segmentTreeS]()
+		{
+			forn(i, 50000)
+			{
+				uint32_t l = getRandom<uint32_t>(0, segmentTreeS - 1);
+				uint32_t r = getRandom<uint32_t>(l + 1, segmentTreeS);
+				uint32_t val = getRandom<uint32_t>(l + 1, segmentTreeS);
+				sl.update(l, r, val);
+			}
+		};
+
+		double tmp = performance::performanceTest(queryTest);
+		rt[i] = { segmentTreeS, tmp };
+	}
+
+	EXPECT_EQ(performance::Complexity::Logarithmic, performance::calculateComplexity(rt));
+}
+
+TEST(SegmentTreeBUQueryComplexityTest, SegmentTreeBUQueryComplexityTest)
+{
+	GeometricProgression<uint32_t> gp(100, 2);
+	const int numberOfTest = 14;
+
+	vector<pair< uint32_t, double> > rt(numberOfTest);
+
+	forn(i, numberOfTest)
+	{
+		uint32_t segmentTreeS = gp.get(i);
+		auto segmentTreeData = generateVector<uint32_t>(segmentTreeS, 2, 10000);
+
+		SegmentTreeBULazy<uint32_t> sl(segmentTreeData);
+
+		auto queryTest = [&sl, &segmentTreeS]()
+		{
+			forn(i, 5000)
+			{
+				uint32_t l = getRandom<uint32_t>(0, segmentTreeS - 1);
+				uint32_t r = getRandom<uint32_t>(l + 1, segmentTreeS);
+				sl.query(l, r);
+			}
+		};
+
+		double tmp = performance::performanceTest(queryTest);
+		rt[i] = { segmentTreeS, tmp };
+	}
+
+	EXPECT_EQ(performance::Complexity::Logarithmic, performance::calculateComplexity(rt));
+}
+
+
+TEST(SegmentTreeBUModifyComplexityTest, SegmentTreeBUModifyComplexityTest)
+{
+	GeometricProgression<uint32_t> gp(100, 2);
+	const int numberOfTest = 14;
+
+	vector<pair< uint32_t, double> > rt(numberOfTest);
+
+	forn(i, numberOfTest)
+	{
+		uint32_t segmentTreeS = gp.get(i);
+		auto segmentTreeData = generateVector<uint32_t>(segmentTreeS, 2, 10000);
+
+		SegmentTreeBULazy<uint32_t> sl(segmentTreeData);
+
+		auto queryTest = [&sl, &segmentTreeS]()
+		{
+			forn(i, 50000)
+			{
+				uint32_t l = getRandom<uint32_t>(0, segmentTreeS - 1);
+				uint32_t r = getRandom<uint32_t>(l + 1, segmentTreeS);
+				uint32_t val = getRandom<uint32_t>(l + 1, segmentTreeS);
+				sl.modify(l, r, val);
+			}
+		};
+
+		double tmp = performance::performanceTest(queryTest);
+		rt[i] = { segmentTreeS, tmp };
+	}
+
+	EXPECT_EQ(performance::Complexity::Logarithmic, performance::calculateComplexity(rt));
+}
