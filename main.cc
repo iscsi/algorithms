@@ -102,7 +102,7 @@ int main(int argc, char** argv)
 		double actsum = 0;
 		forn(j, 5)
 		{
-			double tmp = performance::performanceTest(perfTest3, res[i].first);
+			double tmp = performance::performanceTest(perfTest2, res[i].first);
 			res[i].second.push_back(tmp);
 			actsum += tmp;
 		}

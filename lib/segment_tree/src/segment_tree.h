@@ -35,9 +35,27 @@ struct SegmentTreeLazy
 		data.resize(2 * N, numeric_limits<T>::max());
 		lazy.resize(N, static_cast<T>(0));
 		copy(in.begin(), in.end(), data.begin() + N);
-		ford(i, NN)
+		ford(i, N)
 		{
 			data[i] = min<T>(data[2 * i], data[2 * i + 1]);
+		}
+	}
+
+	void propagateLazy(size_t pos)
+	{
+		if (lazy[pos])
+		{
+			if (2 * pos >= N)
+			{
+				data[2 * pos] += lazy[pos];
+				data[2 * pos + 1] += lazy[pos];
+			}
+			else
+			{
+				lazy[2 * pos] += lazy[pos];
+				lazy[2 * pos + 1] += lazy[pos];
+			}
+			lazy[pos] = static_cast<T>(0);
 		}
 	}
 
@@ -57,9 +75,11 @@ struct SegmentTreeLazy
 				lazy[pos] += val;
 			return;
 		}
+		propagateLazy(pos);
 		size_t mid = (posL + posR) / 2;
 		update(2 * pos, posL, mid, l, r, val);
 		update(2 * pos + 1, mid, posR, l, r, val);
+		data[pos] = min<T>(data[2*pos], data[2*pos+1]);
 	}
 
 	T query(size_t l, size_t r)
@@ -73,20 +93,7 @@ struct SegmentTreeLazy
 			return static_cast<T>(numeric_limits<T>::max());//or some invalid
 		if (posL >= l && posR <= r)
 			return data[pos];
-		if (lazy[pos])
-		{//propagate lazy
-			if (2 * pos >= N)
-			{
-				data[2 * pos] += lazy[pos];
-				data[2 * pos + 1] += lazy[pos];
-			}
-			else
-			{
-				lazy[2 * pos] += lazy[pos];
-				lazy[2 * pos + 1] += lazy[pos];
-			}
-			lazy[pos] = static_cast<T>(0);
-		}
+		propagateLazy(pos);
 		size_t mid = (posL + posR) / 2;
 		T q1 = query(2 * pos, posL, mid, l, r);
 		T q2 = query(2 * pos + 1, mid, posR, l, r);
