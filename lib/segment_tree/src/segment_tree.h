@@ -17,25 +17,25 @@ struct SegmentTreeLazy
 
 	void initSize()
 	{
-		H = 32 - __builtin_clz(N);
-		if ((1 << H) < N)
+		H = static_cast<size_t>(32 - __builtin_clz(static_cast<uint32_t>(NN)));
+		if ((static_cast<size_t>(1) << H) < NN)
 			++H;
-		NN = 1 << H;
+		N = static_cast<size_t>(1) << H;
 	}
 
-	SegmentTreeLazy(size_t S) : N(S)
+	SegmentTreeLazy(size_t S) : NN(S)
 	{
 		initSize();
 		data.resize(2 * N, numeric_limits<T>::max());
 		lazy.resize(N, static_cast<T>(0));
 	}
-	SegmentTreeLazy(const vector<T>& in) : N(in.size())
+	SegmentTreeLazy(const vector<T>& in) : NN(in.size())
 	{
 		initSize();
 		data.resize(2 * N, numeric_limits<T>::max());
 		lazy.resize(N, static_cast<T>(0));
 		copy(in.begin(), in.end(), data.begin() + N);
-		ford(i, N)
+		ford(i, NN)
 		{
 			data[i] = min<T>(data[2 * i], data[2 * i + 1]);
 		}
@@ -48,7 +48,7 @@ struct SegmentTreeLazy
 	
 	void update(size_t pos, size_t posL, size_t posR, size_t l, size_t r, T val)
 	{
-		if (posL < r || posR > l)
+		if (r <= posL || posR <= l)
 			return;
 		if (posL >= l && posR <= r)
 		{
@@ -69,7 +69,7 @@ struct SegmentTreeLazy
 
 	T query(size_t pos, size_t posL, size_t posR, size_t l, size_t r)
 	{
-		if (posL < r || posR > l)
+		if (r <= posL || posR <= l)
 			return static_cast<T>(numeric_limits<T>::max());//or some invalid
 		if (posL >= l && posR <= r)
 			return data[pos];

@@ -143,7 +143,7 @@ uint32_t __inline clz(uint32_t val)
 {
 	uint32_t res = 0;
 	if (_BitScanReverse((unsigned long*)(&res), val))
-		return res;
+		return 31 - res;
 	return 32;
 }
 
