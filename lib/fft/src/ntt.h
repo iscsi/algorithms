@@ -63,39 +63,47 @@ struct NTT
 
 		return ret;
 	}
-	/*
-	void transform2(vector<int> & a, bool invert)
+	
+	//without recursion
+	void transform2(vector<T> & a, bool inv)
 	{
-		int n = (int)a.size();
+		size_t n = a.size();
 
-		for (int i = 1, j = 0; i < n; ++i) {
-			int bit = n >> 1;
-			for (; j >= bit; bit >>= 1)
+		for (size_t i = 1, j = 0; i < n; ++i) 
+		{
+			size_t bit = n >> 1;
+			while (j >= bit)
+			{
 				j -= bit;
+				bit >>= 1;
+			}
 			j += bit;
 			if (i < j)
 				swap(a[i], a[j]);
 		}
 
-		for (int len = 2; len <= n; len <<= 1) {
-			int wlen = root;
-			if (invert) wlen = inverse(root);
-			for (int i = len; i < root_pw; i <<= 1)
-				wlen = int(wlen * 1ll * wlen % mod);
-			for (int i = 0; i < n; i += len) {
-				int w = 1;
-				for (int j = 0; j < len / 2; ++j) {
-					int u = a[i + j], v = int(a[i + j + len / 2] * 1ll * w % mod);
+		for (size_t len = 2; len <= n; len <<= 1) 
+		{
+			T pw = static_cast<T>((1ULL << k) / len);
+			T wlen = powMod(prc, pw, mod);
+			if (inv) wlen = inverse(wlen, mod);
+			for (size_t i = 0; i < n; i += len) 
+			{
+				T w = 1;
+				for (size_t j = 0; j < len / 2; ++j) 
+				{
+					T u = a[i + j], v = (a[i + j + len / 2] * w) % mod;
 					a[i + j] = u + v < mod ? u + v : u + v - mod;
 					a[i + j + len / 2] = u - v >= 0 ? u - v : u - v + mod;
-					w = int(w * 1ll * wlen % mod);
+					w = (w * wlen) % mod;
 				}
 			}
 		}
-		if (invert) {
-			int nrev = inverse(n);
+		if (inv) 
+		{
+			T nrev = inverse(static_cast<T>(n), mod);
 			for (int i = 0; i < n; ++i)
-				a[i] = int(a[i] * 1ll * nrev % mod);
+				a[i] = (a[i] * nrev) % mod;
 		}
-	}*/
+	}
 };
