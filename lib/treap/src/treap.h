@@ -34,7 +34,6 @@ namespace Treap
 		return t == nullptr ? 0 : t->size;
 	}
 
-	
 	void updateSize(pNode t)
 	{
 		if(t != nullptr)
@@ -136,6 +135,75 @@ namespace Treap
 		return getCount(t->left, key) + 1 + getCount(t->right, key);
 	}
 }
+/*
+struct TreapPool;
 
+struct TreapNode
+{
+	static TreapPool mPool;
 
+	uint32_t value;
+	uint32_t priority;
 
+	//additional structures
+	uint32_t size = 0;
+
+	uint32_t left;
+	uint32_t right;
+
+	TreapNode(uint32_t val = 0) :
+		value(val),
+		priority(getRandom<uint32_t>(0, numeric_limits<uint32_t>::max())),
+		left(0),
+		right(0) {}
+
+	~TreapNode()
+	{
+		clear();
+	}
+
+	void clear()
+	{
+		left = right = size = value = 0;
+	}
+
+	uint32_t getSize() const
+	{
+		return size;
+	}
+
+	void updateSize()
+	{
+		mPool.mData[left].getSize() + 1 + mPool.mData[right].getSize();
+	}
+	void split(pNode& l, pNode& r, uint32_t key)
+	{
+		if (t == nullptr)
+		{
+			l = r = nullptr;
+		}
+		else if (t->value <= key)
+		{
+			split(t->right, t->right, r, key);
+			l = t;
+		}
+		else
+		{
+			split(t->left, l, t->left, key);
+			r = t;
+		}
+		updateSize(t);
+	}
+};
+
+struct TreapPool
+{
+	vector<TreapNode> mData;
+	void setSize(uint32_t newSize)
+	{
+		mData.resize(newSize);
+	}
+};
+
+TreapPool TreapNode::mPool;
+*/
