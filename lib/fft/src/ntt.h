@@ -1,5 +1,6 @@
 #pragma once
 #include <tools.h>
+#include <lib/number_theory/number_theory.h>
 
 //https://codeforces.com/blog/entry/48798
 
@@ -8,75 +9,61 @@ struct NTT
 {
 	T k;
 	T c;
-	T mod;// = (2^k)*3+1
+	T mod;// = (2^k)*c+1
 	T primitiveRoot;
 	T prc;// (primitiveRoot^c)%mod
 
 	NTT(T k) : k(k)
 	{
-		//find a modulo
-
+		//find a prime modulo
+		T step = 1 << k;
+		mod = step + 1;
+		while (!isPrime(mod))
+			mod += step;
+		c = mod / step;
 		//find primitive root
-
+		primitiveRoot = 2;
+		while (!isPrimitiveRoot(primitiveRoot, mod))
+			++primitiveRoot;
 		//set prc
-
+		prc = powMod(primitiveRoot, c, mod);
 	}
 
-	uint32_t powMod(uint32_t v, uint32_t pw)
+	vector<T> transform(const vector<T>& a, bool inv)
 	{
-		uint32_t res = 1;
-		while (pw)
-		{
-			if (pw & 1)
-			{
-				res = (res * v) % mod;
-			}
-			v = (v * v) % mod;
-			pw >>= 1;
-		}
-		return res;
-	}
-
-	uint32_t inverse(uint32_t v)
-	{
-		return powMod(v, mod - 2);
-	}
-
-	vector<uint32_t> transform(const vector<uint32_t>& a, bool inv)
-	{
-		int len = a.size();
+		T len = static_cast<T>(a.size());
 		if (len == 1) return a;
-		vector<uint32_t> f(len / 2), g(len / 2);
-		for (int i = 0; i < len; i += 2)
+		vector<T> f(len / 2), g(len / 2);
+		for (T i = 0; i < len; i += 2)
 		{
 			f[i / 2] = a[i];
 			g[i / 2] = a[i + 1];
 		}
 		
-		vector<uint32_t> F = transform(f, inv), G = transform(g, inv);
-		vector<uint32_t> ret(len);
+		vector<T> F = transform(f, inv), G = transform(g, inv);
+		vector<T> ret(len);
 
-		uint32_t pw = (1 << 8) / len;
+		T pw = static_cast<T>(1 << k) / len;
 
-		uint32_t w = powMod(prc, pw), wk = 1;
-		if (inv) w = inverse(w);
+		T w = powMod(prc, pw, mod), wk = 1;
+		if (inv) w = inverse(w, mod);
 
-		for (int i = 0; i < len / 2; ++i)
+		for (T i = 0; i < len / 2; ++i)
 		{
-			uint32_t u = F[i], v = (G[i] * wk) % mod;
+			T u = F[i], v = (G[i] * wk) % mod;
 			ret[i] = (u + v) % mod;
 			ret[i + len / 2] = (mod + u - v) % mod;
 			if (inv)
 			{
-				ret[i] = (ret[i] * inverse(2)) % mod;
-				ret[i + len / 2] = (ret[i + len / 2] * inverse(2)) % mod;
+				ret[i] = (ret[i] * inverse<T>(2, mod)) % mod;
+				ret[i + len / 2] = (ret[i + len / 2] * inverse<T>(2, mod)) % mod;
 			}
 			wk = (wk * w) % mod;
 		}
 
 		return ret;
 	}
-
+	/*
 	void transform2(vector<int> & a, bool invert)
 	{
 		int n = (int)a.size();
@@ -110,5 +97,5 @@ struct NTT
 			for (int i = 0; i < n; ++i)
 				a[i] = int(a[i] * 1ll * nrev % mod);
 		}
-	}
+	}*/
 };

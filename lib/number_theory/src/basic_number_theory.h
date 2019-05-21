@@ -147,3 +147,43 @@ int64_t sumLcmOfPairs(int n)
 	}
 	return res;
 }
+
+bool isPrime(uint64_t a)
+{
+	if (a < 2)
+		return false;
+	for (uint64_t i = 2; i*i <= a; ++i)
+		if (a%i == 0)
+			return false;
+	return true;
+}
+
+template<typename T>
+T powMod(T a, T pw, T mod)
+{
+	T res(1);
+	while (pw)
+	{
+		if (pw & 1)
+		{
+			res = (res * a) % mod;
+		}
+		pw >>= 1;
+		a = (a*a) % mod;
+	}
+	return res;
+}
+
+template<typename T>
+T inverse(T a, T mod)
+{
+	return powMod(a, mod - 2, mod);
+}
+
+template<typename T>
+bool isPrimitiveRoot(T a, T mod)
+{
+	return powMod(a, (mod - 1) / 2, mod) != 1;
+}
+
+
