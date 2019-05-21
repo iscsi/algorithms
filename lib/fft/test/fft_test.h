@@ -30,7 +30,7 @@ TEST(NTTTest, NTTTestMultiplication)
 	{
 		rem += va[i];
 		if (rem & 1)
-			res += (static_cast<uint64_t>(1) << i);
+			res += (1ULL << i);
 		rem >>= 1;
 	}
 	EXPECT_EQ(res, a * b);
@@ -63,7 +63,7 @@ TEST(NTTTest, NTTTestMultiplication2)
 	{
 		rem += va[i];
 		if (rem & 1)
-			res += (static_cast<uint64_t>(1) << i);
+			res += (1ULL << i);
 		rem >>= 1;
 	}
 	EXPECT_EQ(res, a * b);

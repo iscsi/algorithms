@@ -31,7 +31,7 @@ struct NTT
 
 	vector<T> transform(const vector<T>& a, bool inv)
 	{
-		T len = static_cast<T>(a.size());
+		size_t len = a.size();
 		if (len == 1) return a;
 		vector<T> f(len / 2), g(len / 2);
 		for (T i = 0; i < len; i += 2)
@@ -43,12 +43,12 @@ struct NTT
 		vector<T> F = transform(f, inv), G = transform(g, inv);
 		vector<T> ret(len);
 
-		T pw = static_cast<T>(1 << k) / len;
+		T pw = static_cast<T>((1ULL << k) / len);
 
 		T w = powMod(prc, pw, mod), wk = 1;
 		if (inv) w = inverse(w, mod);
 
-		for (T i = 0; i < len / 2; ++i)
+		for (size_t i = 0; i < len / 2; ++i)
 		{
 			T u = F[i], v = (G[i] * wk) % mod;
 			ret[i] = (u + v) % mod;
