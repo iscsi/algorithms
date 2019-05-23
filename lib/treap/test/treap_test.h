@@ -77,7 +77,21 @@ TEST(TreapTest, TreapKeyTestVsMSetMSetTest)
 	forn(i, ITEM_COUNT)
 		ASSERT_EQ(ms.count(i), 3);
 }
+/*
+TEST(TreapPoolTest, TreapPoolSmallTest)
+{
+	TreapNode::mPool.init(1000);
 
+	vector<uint32_t> w({ 5,3,11,22,2 });
+	uint32_t r = 0;
 
+	forn(i, 5)
+	{
+		uint32_t id = TreapNode::mPool.get();
+		TreapNode::mPool.mData[id].value = w[i];
+		TreapNode::mPool.mData[id].insert(r, id);
+	}
 
+	EXPECT_EQ(TreapNode::mPool.mData[r].getSize(), 5);
+}*/
 

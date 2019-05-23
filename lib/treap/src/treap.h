@@ -63,7 +63,7 @@ namespace Treap
 	{
 		if (l == nullptr || r == nullptr)
 		{
-			l = r = nullptr;
+			t = l == nullptr ? r : l;
 		}
 		else if (l->priority > r->priority)
 		{
@@ -135,8 +135,17 @@ namespace Treap
 		return getCount(t->left, key) + 1 + getCount(t->right, key);
 	}
 }
-/*
-struct TreapPool;
+
+struct TreapNode;
+
+struct TreapPool
+{
+	vector<TreapNode> mData;
+	vector<uint32_t> mRemainQueue;
+	void init(uint32_t newSize);
+	uint32_t get();
+	void release(uint32_t v);
+};
 
 struct TreapNode
 {
@@ -148,14 +157,17 @@ struct TreapNode
 	//additional structures
 	uint32_t size = 0;
 
-	uint32_t left;
-	uint32_t right;
+	uint32_t myId;
+	uint32_t leftId;
+	uint32_t rightId;
 
 	TreapNode(uint32_t val = 0) :
 		value(val),
 		priority(getRandom<uint32_t>(0, numeric_limits<uint32_t>::max())),
-		left(0),
-		right(0) {}
+		leftId(0),
+		rightId(0)//,
+		//myId(mPool.get())
+	{}
 
 	~TreapNode()
 	{
@@ -164,7 +176,7 @@ struct TreapNode
 
 	void clear()
 	{
-		left = right = size = value = 0;
+		myId = leftId = rightId = size = value = 0;
 	}
 
 	uint32_t getSize() const
@@ -172,38 +184,137 @@ struct TreapNode
 		return size;
 	}
 
-	void updateSize()
+	void updateSize(uint32_t t)
 	{
-		mPool.mData[left].getSize() + 1 + mPool.mData[right].getSize();
-	}
-	void split(pNode& l, pNode& r, uint32_t key)
-	{
-		if (t == nullptr)
+		if (t)
 		{
-			l = r = nullptr;
+			TreapNode& tn = mPool.mData[t];
+			tn.size = mPool.mData[tn.leftId].getSize() + 1 + mPool.mData[tn.rightId].getSize();
 		}
-		else if (t->value <= key)
+	}
+
+	void split(uint32_t t, uint32_t& l, uint32_t& r, uint32_t key)
+	{
+		TreapNode& tn = mPool.mData[t];
+		if (t == 0)
 		{
-			split(t->right, t->right, r, key);
+			l = r = 0;
+		}
+		else if ( tn.value <= key)
+		{
+			split(tn.rightId, tn.rightId, r, key);
 			l = t;
 		}
 		else
 		{
-			split(t->left, l, t->left, key);
+			split(tn.leftId, l, tn.leftId, key);
 			r = t;
 		}
 		updateSize(t);
 	}
-};
-
-struct TreapPool
-{
-	vector<TreapNode> mData;
-	void setSize(uint32_t newSize)
+	void meld(uint32_t& t, uint32_t l, uint32_t r)
 	{
-		mData.resize(newSize);
+		TreapNode& tn = mPool.mData[t];
+		TreapNode& ln = mPool.mData[l];
+		TreapNode& rn = mPool.mData[r];
+
+		if (l == 0 || r == 0)
+		{
+			t = l == 0 ? r : l;
+		}
+		else if (ln.priority > rn.priority)
+		{
+			meld(ln.rightId, ln.rightId, r);
+			t = l;
+		}
+		else
+		{
+			meld(rn.leftId, l, rn.leftId);
+			t = r;
+		}
+		updateSize(t);
+	}
+
+	void insert(uint32_t& t, uint32_t newNodeId)
+	{
+		TreapNode& tn = mPool.mData[t];
+		TreapNode& nn = mPool.mData[newNodeId];
+		if (t == 0)
+		{
+			t = newNodeId;
+		}
+		else if (nn.priority > tn.priority)
+		{
+			split(t, nn.leftId, nn.rightId, nn.value);
+			t = newNodeId;
+		}
+		else
+		{
+			if (tn.value <= nn.value)
+				insert(tn.rightId, newNodeId);
+			else
+				insert(tn.leftId, newNodeId);
+		}
+		updateSize(t);
+	}
+
+	void erase(uint32_t& t, uint32_t key)
+	{
+		if (t == 0)
+			return;
+		TreapNode& tn = mPool.mData[t];
+		if (tn.value == key)
+		{
+			meld(t, tn.leftId, tn.rightId);
+			mPool.release(t);
+			return;
+		}
+		else
+		{
+			if (tn.value < key)
+				erase(tn.rightId, key);
+			else
+				erase(tn.leftId, key);
+		}
+		updateSize(t);
+	}
+
+	uint32_t getCount(const uint32_t& t, uint32_t key) const
+	{
+		if (t == 0)
+			return 0;
+		const TreapNode& tn = mPool.mData[t];
+		if (tn.value < key)
+			return getCount(tn.rightId, key);
+		if (tn.value > key)
+			return getCount(tn.leftId, key);
+		return getCount(tn.leftId, key) + 1 + getCount(tn.rightId, key);
 	}
 };
 
+void TreapPool::init(uint32_t newSize)
+{
+	mData.clear();
+	mRemainQueue.clear();
+	mData.resize(newSize);
+	mRemainQueue.resize(newSize);
+	for1(i, newSize-1)
+	{
+		mRemainQueue[i] = i;
+	}
+	reverse(all(mRemainQueue));
+}
+
+uint32_t TreapPool::get()
+{
+	uint32_t res = mRemainQueue.back();
+	mRemainQueue.pop_back();
+	return res;
+}
+void TreapPool::release(uint32_t v)
+{
+	mData[v].clear();
+	mRemainQueue.push_back(v);
+}
+
 TreapPool TreapNode::mPool;
-*/
