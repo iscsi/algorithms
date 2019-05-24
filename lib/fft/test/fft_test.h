@@ -18,7 +18,7 @@ TEST(NTTTest, NTTTestMultiplication)
 		return res;
 	};
 	vector<uint32_t> va = func(a), vb = func(b);
-	NTT<uint32_t> ntt(7);
+	NTT<uint32_t> ntt(8);
 	va = ntt.transform(va, false);
 	vb = ntt.transform(vb, false);
 	forn(i, va.size())
@@ -68,6 +68,35 @@ TEST(NTTTest, NTTTestMultiplication2)
 	}
 	EXPECT_EQ(res, a * b);
 }
+
+TEST(NTTTest, NTTTestMultiplicationBig)
+{
+	uint32_t mSize = 1<<17;
+	vector<uint64_t> va({ 1 }), vb({9});
+	forn(i, mSize-1)
+	{
+		va.push_back((va[i] + 1)%10 );
+		vb.push_back((vb[i] + 9) % 10);
+	}
+	va.resize(2 * mSize);
+	vb.resize(2 * mSize);
+	NTT<uint64_t> ntt(20);
+	va = ntt.transform(va, false);
+	vb = ntt.transform(vb, false);
+	forn(i, va.size())
+		va[i] = (va[i] * vb[i]) % ntt.mod;
+	va = ntt.transform(va, true);
+	uint64_t rem = 0;
+	vector<uint64_t> res(2 * mSize);
+	forn(i, 2*mSize)
+	{
+		rem += va[i];
+		res[i] = rem % 10;
+		rem /= 10;
+	}
+	//EXPECT_EQ(res, a * b);
+}
+
 /*
 TEST(NTTTest, NTTTestMultiplicationTr2)
 {
