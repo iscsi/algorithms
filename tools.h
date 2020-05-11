@@ -151,6 +151,34 @@ void generateTree2(int seed = 0)
 	}
 }*/
 
+
+vector<vector<bool> > GenerateDirectedGraphAdjMatrix(size_t nodeSize, uint32_t prob)
+{
+	vector<vector<bool> > res(nodeSize, vector<bool>(nodeSize));
+	forn(i, nodeSize)
+	{
+		generate(res[i].begin(), res[i].end(), [&prob]() {return getRandom<uint32_t>(0, 99) <= prob;});
+		res[i][i] = false;
+	}
+	return res;
+}
+
+vector<vector<size_t> > GenerateDirectedGraphAdjList(size_t nodeSize, uint32_t prob)
+{
+	vector<vector<size_t> > res(nodeSize);
+	forn(i, nodeSize)
+	{
+		forn(j, nodeSize)
+		{
+			if (i != j && getRandom<uint32_t>(0, 99) <= prob)
+			{
+				res[i].push_back(j);
+			}
+		}
+	}
+	return res;
+}
+
 template<typename T>
 struct GeometricProgression
 {

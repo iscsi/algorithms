@@ -1,0 +1,5 @@
+file(GLOB_RECURSE SCC_SRC "../src/*.h")
+source_group("src" FILES ${SCC_SRC})
+add_executable(SCCTest scc_test.cc scc_test.h ../scc_all.h ${SCC_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(SCCTest Rili)
