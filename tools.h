@@ -178,7 +178,7 @@ vector<vector<size_t> > GenerateDirectedGraphAdjList(size_t nodeSize, uint32_t p
 	return res;
 }
 
-vector<vector<bool> > GenerateDirectedAdjMatrix(size_t nodeSize, uint32_t prob)
+vector<vector<bool> > GenerateAdjMatrix(size_t nodeSize, uint32_t prob)
 {
 	vector<vector<bool> > res(nodeSize, vector<bool>(nodeSize));
 	forn(i, nodeSize)
@@ -195,7 +195,7 @@ vector<vector<bool> > GenerateDirectedAdjMatrix(size_t nodeSize, uint32_t prob)
 	return res;
 }
 
-vector<vector<size_t> > GenerateDirectedGraphAdjList(size_t nodeSize, uint32_t prob)
+vector<vector<size_t> > GenerateGraphAdjList(size_t nodeSize, uint32_t prob)
 {
 	vector<vector<size_t> > res(nodeSize);
 	forn(i, nodeSize)
