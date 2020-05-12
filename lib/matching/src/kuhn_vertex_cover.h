@@ -5,29 +5,28 @@
 //https://sites.google.com/site/indy256/algo/kuhn_matching2
 //http://codeforces.com/blog/entry/17534
 
-bool findPath(const vector<vector<int> >& g, int nodeId, vector<int>& matching, vector<bool>& vis)
-{
-	vis[nodeId] = true;
-	for (int BSideId : g[nodeId])
-	{
-		int u = matching[BSideId];
-		if (u == -1 || (!vis[u] && findPath(g, u, matching, vis)))
-		{
-			matching[BSideId] = nodeId;
-			return true;
-		}
-	}
-	return false;
-}
-
 pair<vector<bool>, vector<bool> > minVertexCover(const vector<vector<int> >& g, int B)
 {
-	int A = g.size();
+	size_t A = g.size();
 	vector<int> matching(B, -1);
+	vector<bool> vis(A, false);
+	function<bool(int)> findPath = [&](int nodeId) {
+		vis[nodeId] = true;
+		for (int BSideId : g[nodeId])
+		{
+			int u = matching[BSideId];
+			if (u == -1 || (!vis[u] && findPath(u)))
+			{
+				matching[BSideId] = nodeId;
+				return true;
+			}
+		}
+		return false;
+	};
 	forn(u, A)
 	{
-		vector<bool> vis(A, false);
-		findPath(g, u, matching, vis);
+		fill(all(vis), false);
+		findPath(u);
 	}
 	//orientate the mathing edges B to A all other A to B
 	//start dfs vertecies which not present in the matching

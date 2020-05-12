@@ -1,7 +1,4 @@
-#include <rili/Test.h>
-#include <rili/test/Main.h>
-
-#include <lib/matching/matching.h>
+#include <lib/matching/test/matching_test.h>
 
 int main(int argc, char* argv[])
 {
