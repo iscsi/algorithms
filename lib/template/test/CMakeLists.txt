@@ -1,0 +1,5 @@
+file(GLOB_RECURSE TEMPLATE_SRC "../src/*.h")
+source_group("src" FILES ${TEMPLATE_SRC})
+add_executable(TemplateTest template_test.cc template_test.h ../template_all.h ${TEMPLATE_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(TemplateTest Rili)
