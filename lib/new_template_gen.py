@@ -6,13 +6,23 @@ import subprocess
 from shutil import copyfile
 import string
 
-def replace(folder_path, old, new):
+def replaceFileNames(folder_path, old, new):
     for path, subdirs, files in os.walk(folder_path):
         for name in files:
             if(old.lower() in name.lower()):
                 file_path = os.path.join(path,name)
                 new_name = os.path.join(path,name.lower().replace(old,new))
                 os.rename(file_path, new_name)
+
+def replaceInFilesRecursievely(folder_path, old, new):
+	for dname, dirs, files in os.walk(folder_path):
+	    for fname in files:
+	        fpath = os.path.join(dname, fname)
+	        with open(fpath) as f:
+	            s = f.read()
+	        s = s.replace(old, new)
+	        with open(fpath, "w") as f:
+	            f.write(s)
 
 if len(sys.argv) == 2:
 	newProject = sys.argv[1]
@@ -21,15 +31,29 @@ if len(sys.argv) == 2:
 	dir_util.copy_tree("template",newProjectLower)
 	
 	#rename files template -> newProjectLower
-	replace(newProjectLower, "template", newProjectLower)
+	replaceFileNames(newProjectLower, "template", newProjectLower)
 
-	#replace all files
-	#template -> newProjectLower
-	#Template -> newProject
-	#TEMPLATE -> newProjectUpper
-
+	#replace all pattern in files
+	replaceInFilesRecursievely(newProjectLower, "template", newProjectLower)
+	replaceInFilesRecursievely(newProjectLower, "Template", newProject)
+	replaceInFilesRecursievely(newProjectLower, "TEMPLATE", newProjectUpper)
+	
 	#add newProject to the ../CMakeLists.txt
-	#add_subdirectory(lib/newProjectLower/test)
+
+	cmakeFile = "../CMakeLists.txt"
+
+	with open(cmakeFile) as f:
+		content = f.read()
+	
+	#insert before all test
+
+	newTest = "add_subdirectory(lib/{}_test/)".format(newProjectLower)
+	allTest = "add_subdirectory(lib/all_test/)"
+
+	content = content.replace(allTest, newTest + '\n' + allTest)
+	
+	with open(cmakeFile, "w") as f:
+	    f.write(content)
 
 else:
 	print("Error: wrong number of arguments")
