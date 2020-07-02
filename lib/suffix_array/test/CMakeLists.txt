@@ -1,0 +1,5 @@
+file(GLOB_RECURSE SUFFIX_ARRAY_SRC "../src/*.h")
+source_group("src" FILES ${SUFFIX_ARRAY_SRC})
+add_executable(SuffixArrayTest suffix_array_test.cc suffix_array_test.h ../suffix_array_all.h ${SUFFIX_ARRAY_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(SuffixArrayTest Rili)

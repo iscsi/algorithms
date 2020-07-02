@@ -1,0 +1,5 @@
+file(GLOB_RECURSE BRIDGE_SRC "../src/*.h")
+source_group("src" FILES ${BRIDGE_SRC})
+add_executable(BridgeTest bridge_test.cc bridge_test.h ../bridge_all.h ${BRIDGE_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(BridgeTest Rili)
