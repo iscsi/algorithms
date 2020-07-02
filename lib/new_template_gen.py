@@ -24,10 +24,22 @@ def replaceInFilesRecursievely(folder_path, old, new):
 	        with open(fpath, "w") as f:
 	            f.write(s)
 
+def to_camel_case(snake_str):
+    components = snake_str.split('_')
+    # We capitalize the first letter of each component except the first one
+    # with the 'title' method and join them together.
+    return components[0] + ''.join(x.title() for x in components[1:])
+
+def to_camel_case_Test(snake_str):
+    snake_str = snake_str + "_test"
+    components = snake_str.split('_')
+    return ''.join(x.title() for x in components)
+
 if len(sys.argv) == 2:
 	newProject = sys.argv[1]
 	newProjectLower = newProject.lower()
 	newProjectUpper = newProject.upper()
+	newProjectTest = to_camel_case_Test(newProjectLower)
 	dir_util.copy_tree("template",newProjectLower)
 	
 	#rename files template -> newProjectLower
@@ -35,6 +47,7 @@ if len(sys.argv) == 2:
 
 	#replace all pattern in files
 	replaceInFilesRecursievely(newProjectLower, "template", newProjectLower)
+	replaceInFilesRecursievely(newProjectLower, "TemplateTest", newProjectTest)
 	replaceInFilesRecursievely(newProjectLower, "Template", newProject)
 	replaceInFilesRecursievely(newProjectLower, "TEMPLATE", newProjectUpper)
 	
@@ -47,7 +60,7 @@ if len(sys.argv) == 2:
 	
 	#insert before all test
 
-	newTest = "add_subdirectory(lib/{}_test/)".format(newProjectLower)
+	newTest = "add_subdirectory(lib/{}/test/)".format(newProjectLower)
 	allTest = "add_subdirectory(lib/all_test/)"
 
 	content = content.replace(allTest, newTest + '\n' + allTest)
