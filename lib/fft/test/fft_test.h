@@ -97,7 +97,7 @@ TEST(NTTTest, NTTTestMultiplicationBig)
 	//EXPECT_EQ(res, a * b);
 }
 
-/*
+
 TEST(NTTTest, NTTTestMultiplicationTr2)
 {
 	uint64_t a = 0xabcd6789, b = 0x6789abcd;
@@ -163,4 +163,3 @@ TEST(NTTTest, NTTTestMultiplication2Tr2)
 	}
 	EXPECT_EQ(res, a * b);
 }
-*/

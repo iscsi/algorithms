@@ -94,7 +94,7 @@ struct NTT
 				{
 					T u = a[i + j], v = (a[i + j + len / 2] * w) % mod;
 					a[i + j] = u + v < mod ? u + v : u + v - mod;
-					a[i + j + len / 2] = u - v >= 0 ? u - v : u - v + mod;
+					a[i + j + len / 2] = u >= v ? u - v : u - v + mod;
 					w = (w * wlen) % mod;
 				}
 			}
