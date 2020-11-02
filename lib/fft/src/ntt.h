@@ -105,5 +105,5 @@ struct NTT
 			for (int i = 0; i < n; ++i)
 				a[i] = (a[i] * nrev) % mod;
 		}
-	}
+	} 
 };
