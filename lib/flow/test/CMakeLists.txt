@@ -1,0 +1,5 @@
+file(GLOB_RECURSE FLOW_SRC "../src/*.h")
+source_group("src" FILES ${FLOW_SRC})
+add_executable(FlowTest flow_test.cc flow_test.h ../flow_all.h ${FLOW_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(FlowTest Rili)

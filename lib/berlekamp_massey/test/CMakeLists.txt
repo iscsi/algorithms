@@ -1,0 +1,5 @@
+file(GLOB_RECURSE BERLEKAMP_MASSEY_SRC "../src/*.h")
+source_group("src" FILES ${BERLEKAMP_MASSEY_SRC})
+add_executable(BerlekampMasseyTest berlekamp_massey_test.cc berlekamp_massey_test.h ../berlekamp_massey_all.h ${BERLEKAMP_MASSEY_SRC})
+add_definitions(-DHOME -D_CRT_SECURE_NO_WARNINGS)
+target_link_libraries(BerlekampMasseyTest Rili)
