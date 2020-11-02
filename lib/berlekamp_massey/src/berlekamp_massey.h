@@ -2,6 +2,7 @@
 #include <tools.h>
 #include <lib/number_theory/src/basic_number_theory.h>
 
+//https://codeforces.com/blog/entry/61306
 inline vector<int32_t> BerlekampMassey(const vector<int32_t>& x, int32_t mod)
 {
 	//ls: (shortest) relation sequence (after filling zeroes) so far

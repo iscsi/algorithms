@@ -8,3 +8,4 @@
 #include <lib/segment_tree/test/segment_tree_test.h>
 #include <lib/searching/test/searching_test.h>
 #include <lib/treap/test/treap_test.h>
+#include <lib/berlekamp_massey/test/berlekamp_massey_test.h>
